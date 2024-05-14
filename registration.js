@@ -44,41 +44,41 @@ window.onload = function () {
         }
     }    
     
-    // btn.addEventListener('click', function() {
-    //     let errorMessage = '';
+    btn.addEventListener('click', function() {
+        let errorMessage = '';
 
-    //     if (!checkName.test(inputFirstName.value)) {
-    //         errorMessage += 'Invalid first name\n';
-    //     }
+        if (!checkName.test(inputFirstName.value)) {
+            errorMessage += 'Invalid first name\n';
+        }
     
-    //     if (!checkName.test(inputSecondName.value)) {
-    //         errorMessage += 'Invalid second name\n';
-    //     }
+        if (!checkName.test(inputSecondName.value)) {
+            errorMessage += 'Invalid second name\n';
+        }
     
-    //     if (!checkEmail.test(inputEmail.value)) {
-    //         errorMessage += 'Invalid email\n';
-    //     }
+        if (!checkEmail.test(inputEmail.value)) {
+            errorMessage += 'Invalid email\n';
+        }
     
-    //     if (!checkNumber.test(inputPhone.value)) {
-    //         errorMessage += 'Invalid phone number\n';
-    //     }
+        if (!checkNumber.test(inputPhone.value)) {
+            errorMessage += 'Invalid phone number\n';
+        }
     
-    //     if (!checkPassword.test(inputPassword1.value)) {
-    //         errorMessage += 'Invalid password\n';
-    //     }
+        if (!checkPassword.test(inputPassword1.value)) {
+            errorMessage += 'Invalid password\n';
+        }
     
-    //     if (inputPassword1.value !== inputPassword2.value) {
-    //         errorMessage += 'Different passwords\n';
-    //     }
+        if (inputPassword1.value !== inputPassword2.value) {
+            errorMessage += 'Different passwords\n';
+        }
 
-    //     if (errorMessage !== '') {
-    //         alert('Validation error:\n' + errorMessage);
-    //     } else {
-    //         console.log('Validation passed.');
-    //         submitForm()
-    //     }
+        if (errorMessage !== '') {
+            alert('Validation error:\n' + errorMessage);
+        } else {
+            console.log('Validation passed.');
+            submitForm()
+        }
 
-    // });
+    });
 
 
     btn.addEventListener('click', submitForm())
