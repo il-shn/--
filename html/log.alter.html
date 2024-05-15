@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Вхід в систему</title>
+      <style>
+          body {
+              font-family: 'Garamond', serif;
+              color: #442f1b;
+              margin: 0;
+              padding: 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              background-image: url('https://faktypro.com.ua/uploads/img/cikavi-fakti-pro-licariv.jpg');
+              background-size: cover;
+              background-position: center;
+              background-repeat: no-repeat;
+          }
+          .container {
+              background-color: rgba(255, 255, 255, 0.8);
+              border-radius: 10px;
+              box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+              padding: 40px;
+              width: 300px;
+          }
+          h2 {
+              font-size: 24px;
+              margin-bottom: 20px;
+              text-align: center;
+          }
+          input[type="text"],
+          input[type="password"] {
+              width: calc(100% - 40px);
+              padding: 10px;
+              margin-bottom: 20px;
+              border: none;
+              border-bottom: 2px solid #442f1b;
+              background-color: transparent;
+              font-family: 'Garamond', serif;
+              font-size: 16px;
+              color: #442f1b;
+              outline: none;
+          }
+          input[type="text"]::placeholder,
+          input[type="password"]::placeholder {
+              color: #7a5e3c;
+          }
+          input[type="submit"] {
+              width: calc(100% - 40px);
+              background-color: #442f1b;
+              color: #f4e3cb;
+              padding: 14px 20px;
+              margin: 8px 0;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 16px;
+              font-weight: bold;
+              transition: all 0.3s ease;
+              outline: none;
+          }
+          input[type="submit"]:hover {
+              background-color: #7a5e3c;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <h2>Вхід в систему</h2>
+          <form id="loginForm">
+              <input type="text" id="email" name="email" placeholder="KingRichard@gmail.com" required>
+              <input type="password" id="password" name="password" placeholder="Password" required>
+              <input type="submit" value="Увійти">
+          </form>
+      </div>
+  
+      <script>
+          document.getElementById("loginForm").addEventListener("submit", function(event) {
+              event.preventDefault();
+              var email = document.getElementById("email").value;
+              var password = document.getElementById("password").value;
+              // Тут можна додати код для перевірки авторизації
+              // Наприклад, відправка запиту на сервер або перевірка у локальній базі даних
+              // У цьому прикладі просто виводимо введені дані в консоль
+              console.log("Електронна пошта:", email);
+              console.log("Пароль:", password);
+              // Додаткові дії після авторизації, наприклад, перенаправлення на іншу сторінку
+              // window.location.href = "новий URL";
+          });
+      </script>
+  </body>
+  </html>
+  

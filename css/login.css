@@ -1,0 +1,101 @@
+body {
+    font-family: fantasy;
+    background-color:  #ffecd4;
+    background-image: url();
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .left-img{
+    width: 100px;
+    position: relative;
+    right: 200px;
+    bottom: 200px;
+}
+.right-img{
+    width: 120px;
+    position: relative;
+    left: 220px;
+    top: 200px;
+} */
+.login-container {
+    background: white;
+    padding: 40px;
+    border: solid 1px rgb(194, 194, 194);
+    border-radius: 8px;
+    /* box-shadow: 0 4px 8px rgba(0,0,0,0.1); */
+    width: 300px;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: fantasy;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 10px;
+    background: #7a5e3c;
+    color: rgb(250, 241, 224);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: fantasy;
+}
+
+.login-btn:hover {
+    background: #57432b;
+}
+
+.links {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.links a {
+    margin: 0 10px;
+    color: #7a5e3c;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+#helmet_left{
+    width: 70px;
+    position: relative;
+    top: 80px;
+    left: 300px;
+}
+
+#sword{
+    width: 220px;
+    position: relative;
+    right: 20px;
+    bottom: 60px;
+    rotate: 10%;
+}
+

@@ -6,6 +6,7 @@ window.onload = function () {
     let checkPassword = /^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*]).{10,30}$/g;
     let inputFirstName = document.querySelector('#inputFirstName')
     let inputSecondName = document.querySelector('#inputSecondName')
+    let inputDateOfBirth = document.querySelector('#inputDateOfBirth')
     let inputPhone = document.querySelector('#inputPhoneNumber')
     let inputEmail = document.querySelector('#inputEmail')
     let inputPassword1 = document.querySelector('#inputPassword1')
@@ -43,30 +44,36 @@ window.onload = function () {
             btn.style.cursor = 'default';
         }
     }    
-    
+
+    // Validation
     btn.addEventListener('click', function() {
-        let errorMessage = '';
+        let errorMessage = '';   
 
         if (!checkName.test(inputFirstName.value)) {
             errorMessage += 'Invalid first name\n';
         }
-    
+        console.log('inputFirstName', checkName, inputFirstName.value, checkName.test(inputFirstName.value));        
+        
         if (!checkName.test(inputSecondName.value)) {
             errorMessage += 'Invalid second name\n';
         }
-    
+        console.log('inputSecondName', checkName, inputSecondName.value, checkName.test(inputSecondName.value));
+
         if (!checkEmail.test(inputEmail.value)) {
             errorMessage += 'Invalid email\n';
         }
-    
+        console.log('inputEmail', checkEmail, inputEmail.value, checkEmail.test(inputEmail.value));
+
         if (!checkNumber.test(inputPhone.value)) {
             errorMessage += 'Invalid phone number\n';
         }
-    
+        console.log('inputPhone', checkNumber, inputPhone.value,checkNumber.test(inputPhone.value));
+
         if (!checkPassword.test(inputPassword1.value)) {
             errorMessage += 'Invalid password\n';
         }
-    
+        console.log('inputPassword1', checkPassword, inputPassword1.value, checkPassword.test(inputPassword1.value));
+
         if (inputPassword1.value !== inputPassword2.value) {
             errorMessage += 'Different passwords\n';
         }
@@ -81,23 +88,27 @@ window.onload = function () {
     });
 
 
-    btn.addEventListener('click', submitForm())
+    btn.addEventListener('click', submitForm)
 
     function submitForm() {
+
         const form = document.getElementById('registrationForm');
+        const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
         const formData = {
-            firstName: form.firstName.value,
-            secondName: form.secondName.value,
-            dateOfBirth: form.dateOfBirth.value,
-            phoneNumber: form.phoneNumber.value,
-            email: form.email.value,
-            password: form.password.value
+            _csrf: csrfToken,
+            firstName: inputFirstName.value, 
+            secondName: inputSecondName.value, 
+            dateOfBirth: inputDateOfBirth.value, 
+            phoneNumber: inputPhone.value, 
+            email: inputEmail.value, 
+            password: inputPassword1.value
         };
 
         fetch('/api/registration', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': csrfToken
             },
             body: JSON.stringify(formData)
         })

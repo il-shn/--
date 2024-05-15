@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Встановлення нового паролю</title>
+  <link rel="stylesheet" href="/css/changePass.css">
+</head>
+<body>
+<div class="reset-password-container">
+  <h2>Встановлення нового паролю</h2>
+  <form action="javascript:void(0);">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+    <label for="newPassword">Новий пароль:</label>
+    <input type="password" id="newPassword" name="newPassword" required>
+
+    <label for="confirmPassword">Підтвердіть пароль:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+    <button type="submit">Змінити пароль</button>
+  </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/js/changePass.js"></script>
+</body>
+</html>
