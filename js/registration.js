@@ -92,7 +92,6 @@ window.onload = function () {
         const form = document.getElementById('registrationForm');
         const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
         const formData = {
-            _csrf: csrfToken,
             firstName: inputFirstName.value, 
             secondName: inputSecondName.value, 
             dateOfBirth: inputDateOfBirth.value, 

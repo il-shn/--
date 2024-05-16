@@ -26,14 +26,9 @@
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Create account
-                </a>
-                <select class="dropdown-menu currencyList" action="">
-                  <option class="dropdown-item disabled">Chouse currency <br>to create account</option>
-                  <!-- <option><a class="dropdown-item" href="#">Another action</a></option> -->
-                  <option><hr class="dropdown-divider"></option>
+                  Dropdown-toggle
                   <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-                </select>
+                </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link disabled" aria-disabled="true">Disabled</a>
@@ -109,21 +104,50 @@
         
         <div class="mainBlock">
           <div class="wrapper">
+
+            <section class="sectionBox">
+              <div class="container">
+                <form action="" id="currencyForm">
+                  <h1 class="fw-lighter">Create account</h1>
+                  <h7 class="fw-light text-body-secondary">
+                    Chouse the currency what you want to use below
+                  </h7>
+                  <select class="form-select selectCustom currencyList" size="7" aria-label="Size 10 select example" id="" action="">
+                    <!-- <option class="dropdown-item disabled text-body-secondary">Chouse currency</option> -->
+                    <!-- <option><a class="dropdown-item" href="#">Another action</a></option> -->
+                    <option><hr class="dropdown-divider"></option>
+                  </select>
+                  <button type="submit" class="btn btn-secondary">Submit</button>
+                </form>
+              </div>
+            </section>
+
             <section class="section">
               <ul id="profileList"></ul>
               <div>
-                <img class="helmetImg" src="" alt="helmetImg">
+                <img class="helmetImg" src="" alt="">
               </div>
             </section>
+
             <section class="sectionBox">
               <div class="container">
                 <h1 class="fw-lighter">Account Details</h1>
                 <ul id="accountList" class="list-group"></ul>
                 <nav aria-label="Page navigation">
-                    <ul id="pagination" class="pagination justify-content-center"></ul>
+                    <ul id="pagination" class="pagination justify-content-center">
+                    </ul>
                 </nav>
               </div>                          
             </section>
+
+            <section class="sectionBox">
+              <div class="container">
+                <h1 class="fw-lighter">Replenishment</h1>
+                <select class="form-select selectCustom currencyList" size="5" aria-label="Size 5 select example" id="replenishSelect" action="">
+
+              </div>
+            </section>
+
             <section class="section">
               <div class="sum">
                 <h1>10000 <span class="fw-lighter">UAH</span></h1>
@@ -132,6 +156,7 @@
                 <img src="/card.jpg" alt="">
               </div>
             </section>
+
             <section class="sectionBox">
               <h1 class="fw-lighter">Transaction</h1>
               <div class="container">
@@ -141,12 +166,14 @@
                 </nav>
               </div>            
             </section>
+
             <section class="section">
               <div class="currencyMainBlock">
                 <h1 class="fw-lighter">Currency</h1>
                 <div id="currencyContainer"></div>
               </div>
             </section>
+
           </div>
         </div>
       </main>
