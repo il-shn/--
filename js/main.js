@@ -765,7 +765,7 @@ window.onload = function(){
 
         
         
-        let helmetImgSrc = document.querySelector('.helmetImg').src
+        let helmetImgSrc = document.querySelector('#helmetImg').src
         let profileList = document.querySelector('#profileList');
         
         
@@ -779,60 +779,63 @@ window.onload = function(){
         // console.log(`profileDataRequest.data: ${profileDataRequest.data}`);
         
         let profileItems = JSON.stringify(profileDataRequest.data)
-
-    if (profileItems.length > 0) {
-        console.log(profileDataRequest);
-        profileList.innerHTML = '';
-        profileItems.forEach(item => {
-            profileList.innerHTML += `<li>${item}</li>`;
-        });                
-    }
-
-    // switch (profileDataRequest.titul.name) {
-    //     case "ADMIN":
-    //         helmetImgSrc = '/helmet9.png'
-    //         break;
-    //     case "HERALD":
-    //         helmetImgSrc = '/helmet1.png'
-    //         break;
-    //     case "GUARDIAN":
-    //         helmetImgSrc = '/helmet2.png'
-    //         break;
-    //     case "CRUSADER":
-    //         helmetImgSrc = '/helmet3.png'
-    //         break;
-    //     case "ARCHON":
-    //         helmetImgSrc = '/helmet4.png'
-    //         break;
-    //     case "LEGEND":
-    //         helmetImgSrc = '/helmet5.png'
-    //         break;
-    //     case "ANCIENT":
-    //         helmetImgSrc = '/helmet6.png'
-    //         break;
-    //     case "DIVINE":
-    //         helmetImgSrc = '/helmet7.png'
-    //         break;
-    //     case "IMMORTAL":
-    //         helmetImgSrc = '/helmet8.png'
-    //         break;
-            
-    //         default:
-    //         helmetImgSrc = '/helmet10.png'
-    //         break;
+        console.dir({ profileDataRequest })
+        console.log(`<p><strong>IBAN:</strong> ${JSON.stringify(profileDataRequest.data.iban)}</p>`);
+        console.log(`profileDataRequest.data.iban: ${profileDataRequest.data.iban}`);
+    // if (profileItems.length > 0) {
+    //     console.log(profileDataRequest);
+    //     profileList.innerHTML = '';
+    //     profileItems.forEach(item => {
+    //         profileList.innerHTML += `<li>${item}</li>`;
+    //     });                
     // }
-    helmetImgSrc = '/helmet1.png'
+
+    switch (profileDataRequest.data.titul) {
+        case "ADMIN":
+            helmetImgSrc = '../helmet9.png'
+            break;
+        case "HERALD":
+            helmetImgSrc = '../helmet1.png'
+            break;
+        case "GUARDIAN":
+            helmetImgSrc = '../helmet2.png'
+            break;
+        case "CRUSADER":
+            helmetImgSrc = '../helmet3.png'
+            break;
+        case "ARCHON":
+            helmetImgSrc = '../helmet4.png'
+            break;
+        case "LEGEND":
+            helmetImgSrc = '../helmet5.png'
+            break;
+        case "ANCIENT":
+            helmetImgSrc = '../helmet6.jpg'
+            break;
+        case "DIVINE":
+            helmetImgSrc = '../helmet7.jpg'
+            break;
+        case "IMMORTAL":
+            helmetImgSrc = '../helmet8.jpg'
+            break;
+            
+            default:
+            helmetImgSrc = '../helmet10.jpg'
+            break;
+    }
+    // helmetImgSrc = '../helmet1.png'
     const profileCard = `
         <div>
             <h2>Profile info</h2>
-            <p><strong>First name:</strong> ${profileItems.firstName}</p>
-            <p><strong>Last Name:</strong> ${profileItems.secondName}</p>
-            <p><strong>Date of birth:</strong> ${profileItems.dateOfBirth}</p>
-            <p><strong>Phone number:</strong> ${profileItems.phoneNumber}</p>
-            <p><strong>Email:</strong> ${profileItems.email}</p>
-            <p><strong>Titul name:</strong> ${profileItems.titul}</p>
-            <p><strong>Cashback:</strong> ${profileItems.cashBackInUSD}</p>
-            <p><strong>IBAN:</strong> ${profileItems.iban}</p>
+            <p><strong>First name:</strong> ${profileDataRequest.data.iban}</p>
+            <p><strong>First name:</strong> ${profileDataRequest.data.firstName}</p>
+            <p><strong>Last Name:</strong> ${profileDataRequest.data.secondName}</p>
+            <p><strong>Date of birth:</strong> ${profileDataRequest.data.dateOfBirth}</p>
+            <p><strong>Phone number:</strong> ${profileDataRequest.data.phoneNumber}</p>
+            <p><strong>Email:</strong> ${profileDataRequest.data.email}</p>
+            <p><strong>Titul name:</strong> ${profileDataRequest.data.titul}</p>
+            <p><strong>Cashback:</strong> ${profileDataRequest.data.cashBackInUSD}</p>
+            <p><strong>IBAN:</strong> ${profileDataRequest.data.iban}</p>
             </div>
             `;   
             // <p><strong>Limit for service:</strong> ${data.titul.limitForService}</p>
