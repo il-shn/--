@@ -1,96 +1,99 @@
-  
+ 
 window.onload = function(){
 
-    // const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+    const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
     
-    // // Get CurrencyList (Create account)
+    // Get CurrencyList (Create account)
 
-    // const reqestCurrencyListURL = '/main/api/currency'
+    const reqestCurrencyListURL = 'https://moneyguard-fc72823844dd.herokuapp.com/main/api/currency'
 
-    // function sendGetRequest(method,url) {
-    //     return new Promise((resolve,reject)=>{
-    //         const xhr = new XMLHttpRequest()
+    function sendGetRequest(method,url) {
+        return new Promise((resolve,reject)=>{
+            const xhr = new XMLHttpRequest()
 
-    //         xhr.open(method, url)
-    //         xhr.responseType = 'json'
-    //         xhr.setRequestHeader('X-XSRF-TOKEN', csrfToken);
-    //         xhr.onload = () => {
-    //             if (xhr.status>=400) {
-    //                 reject('Помилка: ' + xhr.status)
-    //             } else {
-    //                 resolve(xhr.response)
-    //             }
-    //         }
-    //         xhr.onerror = () => {
-    //             reject (xhr.response);
-    //         }
-    //         xhr.send()
-    //     })
-    // }
+            xhr.open(method, url)
+            xhr.responseType = 'json'
+            xhr.setRequestHeader('X-XSRF-TOKEN', csrfToken);
+            xhr.onload = () => {
+                if (xhr.status>=400) {
+                    reject('Помилка: ' + xhr.status)
+                } else {
+                    resolve(xhr.response)
+                }
+            }
+            xhr.onerror = () => {
+                reject (xhr.response);
+            }
+            xhr.send()
+        })
+    }
     
-    // let currencyList = document.querySelector('.currencyList');
-    // sendGetRequest('GET', reqestCurrencyListURL)
-    // .then(data => {
-    //     let currencyItems = data.data;
-    //     if (currencyItems.length > 0) {
-    //         currencyItems.forEach(item => {
-    //             let option = document.createElement('option');
-    //             option.textContent = item;
-    //             option.value = item;
-    //             currencyList.appendChild(option);
-    //         });
-    //     } else {
-    //         console.log('No available currency');
-    //     }
-    // })
-    // .catch(err => console.log(err))
+    
+    let currencyList = document.querySelector('.currencyList');
+    sendGetRequest('GET', reqestCurrencyListURL)
+    .then(data => {
+        let currencyItems = data.data;
+        if (currencyItems.length > 0) {
+            currencyItems.forEach(item => {
+                let option = document.createElement('option');
+                option.textContent = item;
+                option.value = item;
+                currencyList.appendChild(option);
+            });
+        } else {
+            console.log('No available currency');
+        }
+    })
+    .catch(err => console.log(err))
 
     // // ================================
     
-    
+    console.log(currencyList.value);
     
     
     // // Post Currency option (Create account) 
 
-    // function sendPostRequest(method,url,body=null) {
-    //     return new Promise((resolve,reject)=>{
-    //         const xhr = new XMLHttpRequest()
+    function sendPostRequest(method,url,body=null) {
+        return new Promise((resolve,reject)=>{
+            const xhr = new XMLHttpRequest()
 
-    //         xhr.open(method, url)
-    //         xhr.responseType = 'json'
-    //         xhr.setRequestHeader('Content-type', 'application/json')
-    //         xhr.setRequestHeader('X-XSRF-TOKEN', csrfToken);
-    //         xhr.onload = () => {
-    //             if (xhr.status>=400) {
-    //                 reject(xhr.response)
-    //             } else {
-    //                 resolve(xhr.response)
-    //             }
-    //         }
-    //         xhr.onerror = () => {
-    //             reject (xhr.response);
-    //         }
-    //         xhr.send(JSON.stringify(body))
-    //     })
-    // }
-    
-    // document.getElementById('currencyForm').addEventListener('submit', function(e) {
-    //     e.preventDefault()
-    //     const selectedOption = currencyList.options[selectElement.selectedIndex];
-    //     const selectedText = selectedOption.text;
+            xhr.open(method, url)
+            xhr.responseType = 'json'
+            xhr.setRequestHeader('Content-type', 'application/json')
+            xhr.setRequestHeader('X-XSRF-TOKEN', csrfToken);
+            xhr.onload = () => {
+                if (xhr.status>=400) {
+                    reject(xhr.response)
+                } else {
+                    resolve(xhr.response)
+                }
+            }
+            xhr.onerror = () => {
+                reject (xhr.response);
+            }
+            xhr.send(JSON.stringify(body))
+        })
+
+    }
+    currencyList.onchange = function(){
+        console.log(this.value);
+    }
+
+    document.getElementById('currencyForm').addEventListener('submit', function(e) {
+        e.preventDefault()
           
-    //     sendPostRequest('POST', '/main/api/createAccount', {
-    //         "currencyName": selectedText })
-    //         .then(response => {
-    //             console.log('Успішна відповідь:', response);
-    //             profileGetRequest()
-    //             alert(`Account with ${selectedText} currency has created successfully`);
-    //         })
-    //         .catch(error => {
-    //             console.error('Помилка:', error);
-    //             alert('Account with this currency has been created')
-    //         });
-    // });    
+        sendPostRequest('POST', 'https://moneyguard-fc72823844dd.herokuapp.com/main/api/createAccount', {
+            "currencyName": selectedText })
+            .then(response => {
+                console.log('Успішна відповідь:', response);
+                profileGetRequest()
+                alert(`Account with ${selectedText} currency has created successfully`);
+            })
+            .catch(error => {
+                console.error('Помилка:', error);
+                alert('Account with this currency has been created')
+            });
+    });    
 
 
     // // ================================
@@ -98,134 +101,151 @@ window.onload = function(){
 
     // // Get Profile data
 
-        // fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/profile')
-    //   .then(response => response.json())
-    //   .then(json => console.log(json))
 
 
         
-        // let helmetImgSrc = document.querySelector('.helmetImg').src
 
-        // fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/profile', {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'X-XSRF-TOKEN': csrfToken
-        //     }
-        // })
+    fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/profile', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': csrfToken
+        }
+    })
+    
+        .then(response=>{
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json()
+        })
+        .then(profileDataResponse => {
+            if (profileDataResponse.success = true) {
+                console.log(profileDataResponse.message);
+                console.log(profileDataResponse.success);
+
+                let profileList = document.querySelector('#profileList');
         
-        //     .then(response=>{
-        //         if (!response.ok) {
-        //             throw new Error('Network response was not ok');
-        //         }
-        //         return response.json()
-        //     })
-        //     .then(data => {
-        //         if (data.success = true) {
-        //             console.log(data.message);
-        //             let profileList = document.querySelector('#profileList');
+            const profileCard = `
+                <div>
+                    <h2>Profile info</h2>
+                    <p><strong>First name:</strong> ${profileDataResponse.data.iban}</p>
+                    <p><strong>First name:</strong> ${profileDataResponse.data.firstName}</p>
+                    <p><strong>Last Name:</strong> ${profileDataResponse.data.secondName}</p>
+                    <p><strong>Date of birth:</strong> ${profileDataResponse.data.dateOfBirth}</p>
+                    <p><strong>Phone number:</strong> ${profileDataResponse.data.phoneNumber}</p>
+                    <p><strong>Email:</strong> ${profileDataResponse.data.email}</p>
+                    <p><strong>Cashback:</strong> ${profileDataResponse.data.cashBackInUSD}</p>
+                    <p><strong>Titul name:</strong> ${profileDataResponse.data.titul}</p>
+                    <p><strong>Limit for service:</strong> ${profileDataResponse.data.limitForService}</p>
+                    <p><strong>IBAN:</strong> ${profileDataResponse.data.iban}</p>
+                    </div>
+                    `;   
+            profileList.innerHTML = profileCard;  
 
-        //             // let profileItems = data;
-        //             // if (profileItems.length > 0) {
-        //             //     console.log(data);
-        //             //     profileList.innerHTML = '';
-        //             //     data.forEach(item => {
-        //             //         profileList.innerHTML += `<li>${item}</li>`;
-        //             //     });                
-        //             // }
-
-        //             switch (data.titul.name) {
-        //                 case "ADMIN":
-        //                     helmetImgSrc = '/helmet9.png'
-        //                     break;
-        //                 case "HERALD":
-        //                     helmetImgSrc = '/helmet1.png'
-        //                     break;
-        //                 case "GUARDIAN":
-        //                     helmetImgSrc = '/helmet2.png'
-        //                     break;
-        //                 case "CRUSADER":
-        //                     helmetImgSrc = '/helmet3.png'
-        //                     break;
-        //                 case "ARCHON":
-        //                     helmetImgSrc = '/helmet4.png'
-        //                     break;
-        //                 case "LEGEND":
-        //                     helmetImgSrc = '/helmet5.png'
-        //                     break;
-        //                 case "ANCIENT":
-        //                     helmetImgSrc = '/helmet6.png'
-        //                     break;
-        //                 case "DIVINE":
-        //                     helmetImgSrc = '/helmet7.png'
-        //                     break;
-        //                 case "IMMORTAL":
-        //                     helmetImgSrc = '/helmet8.png'
-        //                     break;
+                function titulImg(params) {
+                    let helmetImgSrc = document.querySelector('#helmetImg');
+        
+                    switch (profileDataResponse.data.titul) {
+                        case "ADMIN":
+                            helmetImgSrc.src = '../helmet9.png'
+                            break;
+                        case "HERALD":
+                            helmetImgSrc.src = '../helmet1.png'
+                            break;
+                        case "GUARDIAN":
+                            helmetImgSrc.src = '../helmet2.png'
+                            break;
+                        case "CRUSADER":
+                            helmetImgSrc.src = '../helmet3.png'
+                            break;
+                        case "ARCHON":
+                            helmetImgSrc.src = '../helmet4.png'
+                            break;
+                        case "LEGEND":
+                            helmetImgSrc.src = '../helmet5.png'
+                            break;
+                        case "ANCIENT":
+                            helmetImgSrc.src = '../helmet6.jpg'
+                            break;
+                        case "DIVINE":
+                            helmetImgSrc.src = '../helmet7.jpg'
+                            break;
+                        case "IMMORTAL":
+                            helmetImgSrc.src = '../helmet8.jpg'
+                            break;
                             
-        //                     default:
-        //                     helmetImgSrc = '/helmet10.png'
-        //                     break;
-        //             }
-        //             let helmetImgSrc = document.querySelector('.helmetImg').src
-        //             helmetImgSrc = '/helmet1.png'
-        //             const profileCard = `
-        //                 <div>
-        //                     <h2>Profile info</h2>
-        //                     <p><strong>First name:</strong> ${data.firstName}</p>
-        //                     <p><strong>Last Name:</strong> ${data.secondName}</p>
-        //                     <p><strong>Date of birth:</strong> ${data.dateOfBirth}</p>
-        //                     <p><strong>Phone number:</strong> ${data.phoneNumber}</p>
-        //                     <p><strong>Email:</strong> ${data.email}</p>
-        //                     <p><strong>Titul name:</strong> ${data.titul.name}</p>
-        //                     <p><strong>Limit for service:</strong> ${data.titul.limitForService}</p>
-        //                     <p><strong>Cashback:</strong> ${data.cashBackInUSD}</p>
-        //                     <p><strong>IBAN:</strong> ${data.iban}</p>
-        //                 </div>
-        //             `;   
+                            default:
+                            helmetImgSrc.src = '../helmet10.jpg'
+                            break;
+                    }
+                }
+                titulImg()  
     
-        //             profileList.innerHTML = profileCard;     
+            
+            } else {
+                console.log(profileDataResponse.message);
+                console.log(profileDataResponse.success);
+                alert(JSON.stringify(profileDataResponse.message)); 
+
+            }
+        })
+        .catch(err => console.log(err))
     
-        //         } else {
-        //             console.log('data.success != true');
-        //         }
-        //     })
-        //     .catch(err => console.log(err))
-    // 
+
 
     // //  ================================
 
 
     // // Replenishment
 
-    // const selectElement = document.getElementById("replenishSelect");
-    // const selectedOption = selectElement.options[selectElement.selectedIndex];
-    // const selectedText = selectedOption.text;
+    let replenishSelect = document.querySelector('#replenishSelect');
+    sendGetRequest('GET', reqestCurrencyListURL)
+    .then(data => {
+        let currencyItems = data.data;
+        if (currencyItems.length > 0) {
+            currencyItems.forEach(item => {
+                let option = document.createElement('option');
+                option.textContent = item;
+                option.value = item;
+                replenishSelect.appendChild(option);
+            });
+        } else {
+            console.log('No available currency');
+        }
+    })
+    .catch(err => console.log(err))
 
-    // fetch('/main/api/cheatingAccountReplenishment', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'X-XSRF-TOKEN': csrfToken
-    //     },
-    //     body: JSON.stringify({
-    //         "currencyName": selectedText
-    //     })
-    // })
-    // .then(response => {
-    //     if (response.ok) {
-    //         console.log(data.success);
-    //         alert(data.message)
-    //     } else {
-    //         return response.text().then(text => {
-    //             throw new Error(text || 'Error');
-    //         });
-    //     }
-    // })
-    // .catch(error => {
-    //     alert('Error: ' + error.message);
-    //     console.log(data.success);
-    // });
+
+    console.log(replenishSelect);
+    const selectedOption = replenishSelect.options[replenishSelect.selectedIndex];
+    const selectedText = selectedOption.text;
+    console.log(selectedText);
+
+    fetch('/main/api/cheatingAccountReplenishment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+            "currencyName": selectedText
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log(data.success);
+            alert(data.message)
+        } else {
+            return response.text().then(text => {
+                throw new Error(text || 'Error');
+            });
+        }
+    })
+    .catch(error => {
+        alert('Error: ' + error.message);
+        console.log(data.success);
+    });
 
 
     // // ================================
@@ -445,11 +465,36 @@ window.onload = function(){
 
 
 
-    //==========================================================================
+    // fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/profile')
+    // .then(response => response.json())
+    // .then(json => console.log(json))
+
+
 
     //==========================================================================
 
     //==========================================================================
+
+    //==========================================================================
+
+        //==========================================================================
+
+    //==========================================================================
+
+    //==========================================================================
+
+        //==========================================================================
+
+    //==========================================================================
+
+    //==========================================================================
+
+        //==========================================================================
+
+    //==========================================================================
+
+    //==========================================================================
+
 
 
     /////////////
@@ -749,98 +794,75 @@ window.onload = function(){
 
     //     // Get Profile data
 
-    const profileDataRequest = {
-        "success":true,
-        "message":"",
-        "data":{
-            "firstName":"ADMIN",
-        "secondName":"VSEIA Bankov",
-        "dateOfBirth":[2004,5,16],
-        "phoneNumber":"+380966839230",
-        "email":"123@gmail.com",
-        "cashBackInUSD":0,
-        "titul":"ANCIENT",
-        "limitForService":25000,
-        "iban":"UA69305299000000000000000001"}}
+    // const profileDataRequest = {
+    //     "success":true,
+    //     "message":"",
+    //     "data":{
+    //         "firstName":"ADMIN",
+    //     "secondName":"VSEIA Bankov",
+    //     "dateOfBirth":[2004,5,16],
+    //     "phoneNumber":"+380966839230",
+    //     "email":"123@gmail.com",
+    //     "cashBackInUSD":0,
+    //     "titul":"ANCIENT",
+    //     "limitForService":25000,
+    //     "iban":"UA69305299000000000000000001"}}
 
         
         
-        let helmetImgSrc = document.querySelector('#helmetImg').src
-        let profileList = document.querySelector('#profileList');
+    //     let helmetImgSrc = document.querySelector('#helmetImg');
+    //     let profileList = document.querySelector('#profileList');
         
-        
-        // alert(profileDataRequest.data)
-        // console.log(profileDataRequest);
-        // console.log(profileItems);
-        // console.log(profileDataRequest.data);
-        // console.log(JSON.stringify(profileDataRequest));
-        // console.log(`profileDataRequest: ${profileDataRequest}`);
-        // console.log(`profileItems: ${profileItems}`);
-        // console.log(`profileDataRequest.data: ${profileDataRequest.data}`);
-        
-        let profileItems = JSON.stringify(profileDataRequest.data)
-        console.dir({ profileDataRequest })
-        console.log(`<p><strong>IBAN:</strong> ${JSON.stringify(profileDataRequest.data.iban)}</p>`);
-        console.log(`profileDataRequest.data.iban: ${profileDataRequest.data.iban}`);
-    // if (profileItems.length > 0) {
-    //     console.log(profileDataRequest);
-    //     profileList.innerHTML = '';
-    //     profileItems.forEach(item => {
-    //         profileList.innerHTML += `<li>${item}</li>`;
-    //     });                
-    // }
 
-    switch (profileDataRequest.data.titul) {
-        case "ADMIN":
-            helmetImgSrc = '../helmet9.png'
-            break;
-        case "HERALD":
-            helmetImgSrc = '../helmet1.png'
-            break;
-        case "GUARDIAN":
-            helmetImgSrc = '../helmet2.png'
-            break;
-        case "CRUSADER":
-            helmetImgSrc = '../helmet3.png'
-            break;
-        case "ARCHON":
-            helmetImgSrc = '../helmet4.png'
-            break;
-        case "LEGEND":
-            helmetImgSrc = '../helmet5.png'
-            break;
-        case "ANCIENT":
-            helmetImgSrc = '../helmet6.jpg'
-            break;
-        case "DIVINE":
-            helmetImgSrc = '../helmet7.jpg'
-            break;
-        case "IMMORTAL":
-            helmetImgSrc = '../helmet8.jpg'
-            break;
+    // switch (profileDataRequest.data.titul) {
+    //     case "ADMIN":
+    //         helmetImgSrc.src = '../helmet9.png'
+    //         break;
+    //     case "HERALD":
+    //         helmetImgSrc.src = '../helmet1.png'
+    //         break;
+    //     case "GUARDIAN":
+    //         helmetImgSrc.src = '../helmet2.png'
+    //         break;
+    //     case "CRUSADER":
+    //         helmetImgSrc.src = '../helmet3.png'
+    //         break;
+    //     case "ARCHON":
+    //         helmetImgSrc.src = '../helmet4.png'
+    //         break;
+    //     case "LEGEND":
+    //         helmetImgSrc.src = '../helmet5.png'
+    //         break;
+    //     case "ANCIENT":
+    //         helmetImgSrc.src = '../helmet6.jpg'
+    //         break;
+    //     case "DIVINE":
+    //         helmetImgSrc.src = '../helmet7.jpg'
+    //         break;
+    //     case "IMMORTAL":
+    //         helmetImgSrc.src = '../helmet8.jpg'
+    //         break;
             
-            default:
-            helmetImgSrc = '../helmet10.jpg'
-            break;
-    }
-    // helmetImgSrc = '../helmet1.png'
-    const profileCard = `
-        <div>
-            <h2>Profile info</h2>
-            <p><strong>First name:</strong> ${profileDataRequest.data.iban}</p>
-            <p><strong>First name:</strong> ${profileDataRequest.data.firstName}</p>
-            <p><strong>Last Name:</strong> ${profileDataRequest.data.secondName}</p>
-            <p><strong>Date of birth:</strong> ${profileDataRequest.data.dateOfBirth}</p>
-            <p><strong>Phone number:</strong> ${profileDataRequest.data.phoneNumber}</p>
-            <p><strong>Email:</strong> ${profileDataRequest.data.email}</p>
-            <p><strong>Titul name:</strong> ${profileDataRequest.data.titul}</p>
-            <p><strong>Cashback:</strong> ${profileDataRequest.data.cashBackInUSD}</p>
-            <p><strong>IBAN:</strong> ${profileDataRequest.data.iban}</p>
-            </div>
-            `;   
-            // <p><strong>Limit for service:</strong> ${data.titul.limitForService}</p>
-
-    profileList.innerHTML = profileCard;     
+    //         default:
+    //         helmetImgSrc.src = '../helmet10.jpg'
+    //         break;
+    // }
+    // const profileCard = `
+    //     <div>
+    //         <h2>Profile info</h2>
+    //         <p><strong>First name:</strong> ${profileDataRequest.data.iban}</p>
+    //         <p><strong>First name:</strong> ${profileDataRequest.data.firstName}</p>
+    //         <p><strong>Last Name:</strong> ${profileDataRequest.data.secondName}</p>
+    //         <p><strong>Date of birth:</strong> ${profileDataRequest.data.dateOfBirth}</p>
+    //         <p><strong>Phone number:</strong> ${profileDataRequest.data.phoneNumber}</p>
+    //         <p><strong>Email:</strong> ${profileDataRequest.data.email}</p>
+    //         <p><strong>Cashback:</strong> ${profileDataRequest.data.cashBackInUSD}</p>
+    //         <p><strong>Titul name:</strong> ${profileDataRequest.data.titul}</p>
+    //         <p><strong>Limit for service:</strong> ${profileDataRequest.data.limitForService}</p>
+    //         <p><strong>IBAN:</strong> ${profileDataRequest.data.iban}</p>
+    //         </div>
+    //         `;   
+    // profileList.innerHTML = profileCard;     
 
 
 }
