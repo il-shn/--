@@ -497,52 +497,6 @@ window.onload = function(){
     /////////////
     ////TEST/////!!!!!!!!!!!!!!!!
     /////////////
-    let data = {
-        "success": true,
-        "message": "Retrieved top three currency rates",
-        "data": [
-          {
-            "rateId": 1,
-            "shortName": "USD",
-            "fullName": "United States Dollar",
-            "sellRate": 1.1000,
-            "buyRate": 1.0800
-          },
-          {
-            "rateId": 2,
-            "shortName": "EUR",
-            "fullName": "Euro",
-            "sellRate": 1.2000,
-            "buyRate": 1.1700
-          },
-          {
-            "rateId": 3,
-            "shortName": "GBP",
-            "fullName": "British Pound",
-            "sellRate": 1.3000,
-            "buyRate": 1.2800
-          }
-        ]
-      }
-
-        console.log(data.success);
-
-        const currencies = data.data;
-        console.log(currencies);
-        const currencyContainer = document.querySelector('#currencyContainer');
-        const currencyBlock = document.createElement('div');
-        currencyContainer.appendChild(currencyBlock);
-  
-        currencies.forEach(currency => {
-          currencyBlock.classList.add('currency');
-          
-          console.log(currency);
-          currencyBlock.innerHTML = `
-            <h4>${currency.shortName}</h4>
-            <div>Sell Rate: ${currency.sellRate}</div>
-            <div>Buy Rate: ${currency.buyRate}</div>
-          `;
-        });
       
       
 
@@ -551,97 +505,97 @@ window.onload = function(){
     ////TEST/////!!!!!!!!!!!!!!!! PAGINATION ACCOUNTS
     /////////////
 
-    // let data = {
-    //     "success": true,
-    //     "message": "",
-    //     "data": {
-    //       "content": [
-    //         {
-    //           "cardIds": [
-    //             {
-    //               "validity": "2024-12-31T23:59:59",
-    //               "cvv": 123,
-    //               "ownerName": "John Doe",
-    //               "cardNumber": "1234-5678-9101-1121"
-    //             },
-    //             {
-    //               "validity": "2025-11-30T23:59:59",
-    //               "cvv": 456,
-    //               "ownerName": "Jane Smith",
-    //               "cardNumber": "1223-4567-8910-1112"
-    //             }
-    //           ],
-    //           "amountOfMoney": 1500.00,
-    //           "currencyName": "USD"
-    //         }
-    //       ],
-    //       "pageable": {
-    //         "pageSize": 10,
-    //         "pageNumber": 0,
-    //         "offset": 0,
-    //         "unpaged": false,
-    //         "paged": true
-    //       },
-    //       "totalElements": 1,
-    //       "totalPages": 1,
-    //       "last": true,
-    //       "size": 10,
-    //       "number": 0,
-    //       "sort": {
-    //         "sorted": false,
-    //         "unsorted": true,
-    //         "empty": true
-    //       },
-    //       "numberOfElements": 1,
-    //       "first": true,
-    //       "empty": false
-    //     }
-    // }
+    let data = {
+        "success": true,
+        "message": "",
+        "data": {
+          "content": [
+            {
+              "cardIds": [
+                {
+                  "validity": "2024-12-31T23:59:59",
+                  "cvv": 123,
+                  "ownerName": "John Doe",
+                  "cardNumber": "1234-5678-9101-1121"
+                },
+                {
+                  "validity": "2025-11-30T23:59:59",
+                  "cvv": 456,
+                  "ownerName": "Jane Smith",
+                  "cardNumber": "1223-4567-8910-1112"
+                }
+              ],
+              "amountOfMoney": 1500.00,
+              "currencyName": "USD"
+            }
+          ],
+          "pageable": {
+            "pageSize": 10,
+            "pageNumber": 0,
+            "offset": 0,
+            "unpaged": false,
+            "paged": true
+          },
+          "totalElements": 1,
+          "totalPages": 1,
+          "last": true,
+          "size": 10,
+          "number": 0,
+          "sort": {
+            "sorted": false,
+            "unsorted": true,
+            "empty": true
+          },
+          "numberOfElements": 1,
+          "first": true,
+          "empty": false
+        }
+    }
     
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     loadPages(data);
-    //     loadData(data, 0);
-    // });
+    document.addEventListener('DOMContentLoaded', function() {
+        loadPages(data);
+        loadData(data, 0);
+    });
     
-    // function loadPages(data) {
-    //     const pageCount = data.data.totalPages;
-    //     const pagesContainer = document.getElementById('pages');
+    function loadPages(data) {
+        const pageCount = data.data.totalPages;
+        const pagesContainer = document.getElementById('pages');
     
-    //     for (let i = 0; i < pageCount; i++) {
-    //         const pageLink = document.createElement('a');
-    //         pageLink.classList.add('page-link');
-    //         pageLink.id = i;
-    //         pageLink.textContent = 'Page ' + (i + 1);
+        for (let i = 0; i < pageCount; i++) {
+            const pageLink = document.createElement('a');
+            pageLink.classList.add('page-link');
+            pageLink.id = i;
+            pageLink.textContent = 'Page ' + (i + 1);
     
-    //         const listItem = document.createElement('li');
-    //         listItem.classList.add('page-item');
-    //         listItem.appendChild(pageLink);
+            const listItem = document.createElement('li');
+            listItem.classList.add('page-item');
+            listItem.appendChild(pageLink);
     
-    //         pagesContainer.appendChild(listItem);
-    //     }
+            pagesContainer.appendChild(listItem);
+        }
     
-    //     document.getElementById('pages').addEventListener('click', function(event) {
-    //         if (event.target.classList.contains('page-link')) {
-    //             loadData(data, event.target.id);
-    //         }
-    //     });
-    // }
+        document.getElementById('pages').addEventListener('click', function(event) {
+            if (event.target.classList.contains('page-link')) {
+                loadData(data, event.target.id);
+            }
+        });
+    }
     
-    // function loadData(data, page) {
-    //     const dataContainer = document.getElementById('data');
-    //     dataContainer.innerHTML = '';
+    function loadData(data, page) {
+        const dataContainer = document.getElementById('data');
+        dataContainer.innerHTML = '';
     
-    //     data.data.content.forEach(item => {
-    //         const cardItem = document.createElement('div');
-    //         cardItem.classList.add('list-group-item');
-    //         cardItem.innerHTML = `
-    //             <h5 class="card-title">Card Number: ${item.cardIds[0].cardNumber}</h5>
-    //             <p class="card-text">Owner Name: ${item.cardIds[0].ownerName}</p>
-    //             <p class="card-text">Amount: ${item.amountOfMoney}</p>
-    //             <p class="card-text">Currency: ${item.currencyName}</p>
-    //         `;
-    //         dataContainer.appendChild(cardItem);
-    //     });
-    // }
+        data.data.content.forEach(item => {
+            const cardItem = document.createElement('div');
+            cardItem.classList.add('list-group-item');
+            cardItem.innerHTML = `
+                <h5 class="card-title">Card Number: ${item.cardIds[0].cardNumber}</h5>
+                <p class="card-text">Owner Name: ${item.cardIds[0].ownerName}</p>
+                <p class="card-text">Amount: ${item.amountOfMoney}</p>
+                <p class="card-text">Currency: ${item.currencyName}</p>
+            `;
+            dataContainer.appendChild(cardItem);
+        });
+    }
 
 }
