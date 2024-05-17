@@ -117,3 +117,14 @@ margin: 0px 0 20px 0;
     flex-direction: row;
     justify-content: space-between;
 } */
+
+.data-block {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    border-radius: 7px;
+}
+.label {
+    font-weight: bold;
+}

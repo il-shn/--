@@ -56,39 +56,45 @@
 
                     <section class="sectionBox">
                     <div class="container">
-                        <form action="/moneyTransfer/cardTransfer
+                        <form action="
                         " method="post" id="currencyForm">
 
-                            <h1 class="fw-lighter">Exchange</h1>
-                                <h6 class="fw-light text-body-secondary">
-                                    Your available account:
-                                </h6>
+                            <h1 class="fw-lighter">Deposit</h1>
+                                <h7 class="fw-light text-body-secondary"></h7>
+                                <div class="d-flex flex-row justify-content-between">
+                                    <div id="block1" class="data-block"></div>
+                                    <div id="block2" class="data-block"></div>
+                                    <div id="block3" class="data-block"></div>
+                                </div>
+
                                 <h7 class="fw-light text-body-secondary">
-                                    From:
+                                    Select deposit plan
                                 </h7>
-                                <label for="currencyNameFrom"></label>
-                                <select class="form-select selectCustom currencyList" size="5" aria-label="Size 5 select example" id="currencyNameFrom" action="">
+                                
+                                <label for="currencyNameTo"></label>
+                                <select class="form-select selectCustom currencyList" size="1" aria-label="Size 3 select example" id="select" action="">
                                 </select>
                                 
                                 <h7 class="fw-light text-body-secondary">
-                                    to:
+                                    Select currency
                                 </h7>
                                 <label for="currencyNameTo"></label>
-                                <select class="form-select selectCustom currencyList" size="5" aria-label="Size 5 select example" id="currencyNameTo" action="">
+                                <select class="form-select selectCustom currencyList" size="1" aria-label="Size  select example" id="selectCurr" action="">
                                 </select>
-                                  
-                                  <div class="input-group mb-3">
-                                    <input type="number" class="form-control" placeholder="100$" step="0.01" aria-label="Recipient's username" id="transferAmount" aria-describedby="basic-addon2" required>
-                                    <span class="input-group-text" id="basic-addon2">Transfer Amount</span>
+
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" placeholder="100$" step="0.01" aria-label="Recipient's username" id="amount" aria-describedby="basic-addon2" required>
+                                    <span class="input-group-text" id="basic-addon2"> Amount</span>
                                   </div>
-                                
+                                                                  
                                 <button type="submit" class="btn btn-secondary">Submit</button>
                         </form>
+                    
                     </div>
                     </section>
                 </div>
                 </div>
-        <script src="../js/exchange.js"></script>
+        <script src="../js/deposit.js"></script>
         </main>
     </body>
 </html>

@@ -1,6 +1,6 @@
 window.onload =function(){
 
-    let urlGetMineCurrencyRequest = 'https://jsonplaceholder.typicode.com/moneyTransfer/getMineCurrency'
+    let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency'
     let urlPostCardTransferRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/cardTransfer'
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
@@ -26,8 +26,6 @@ window.onload =function(){
         let currencyItems = response.data;
         if (currencyItems.length > 0) {
             currencyItems.forEach(item => {
-                console.log(currencyItems);
-                console.log(item);
                 let option = document.createElement('option');
                 option.textContent = item;
                 option.value = item;

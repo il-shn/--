@@ -1,13 +1,13 @@
 window.onload =function(){
 
-    let urlGetMineCurrencyRequest = 'https://jsonplaceholder.typicode.com/moneyTransfer/getMineCurrency'
-    let urlPostCardTransferRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/cardTransfer'
+    let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency'
+    let urlPostExchangeRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/currencyExchange'
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
-    let myCurrencyList = document.querySelector('.currencyList');
+    let currencyNameFrom = document.querySelector('#currencyNameFrom');
+    let currencyNameTo = document.querySelector('#currencyNameTo');
     let transferAmount = document.querySelector('#transferAmount');
-    let toCardNumber = document.querySelector('#toCardNumber');
     
 
     fetch(urlGetMineCurrencyRequest, {
@@ -29,9 +29,14 @@ window.onload =function(){
                 console.log(currencyItems);
                 console.log(item);
                 let option = document.createElement('option');
+                let otherOption = document.createElement('option')
                 option.textContent = item;
+                otherOption.textContent = item;
                 option.value = item;
-                myCurrencyList.appendChild(option);
+                otherOption.value = item;
+                currencyNameFrom.appendChild(option);
+                currencyNameTo.appendChild(otherOption);
+                
             })
         }
     })
@@ -44,15 +49,15 @@ window.onload =function(){
         e.preventDefault()
           
 
-        fetch(urlPostCardTransferRequest, {
+        fetch(urlPostExchangeRequest, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-XSRF-TOKEN': csrfToken
             },
             body: JSON.stringify({
-                "currencyName": myCurrencyList.value,
-                "toCardNumber": toCardNumber.value,
+                "currencyNameFrom": currencyNameFrom.value,
+                "currencyNameTo": currencyNameTo.value,
                 "transferAmount": transferAmount.value
             })
         })

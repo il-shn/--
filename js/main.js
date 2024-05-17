@@ -319,16 +319,16 @@ window.onload = function(){
             
                     pageContainer.appendChild(listItem);
                 }
+                document.getElementById('pages').addEventListener('click', function(event) {
+                    if (event.target.classList.contains('page-link')) {
+                        loadData(event.target.id);
+                    }
+                });
             })
             .catch(error => {
                 console.error('Failed to load pages:', error);
             });
     
-        document.getElementById('pages').addEventListener('click', function(event) {
-            if (event.target.classList.contains('page-link')) {
-                loadData(response, event.target.id);
-            }
-        });
     }
     
     function loadData(page) {
@@ -391,16 +391,16 @@ window.onload = function(){
     
                     pagesContainer.appendChild(listItem);
                 }
+                document.getElementById('pagination').addEventListener('click', function(event) {
+                    if (event.target.classList.contains('page-link')) {
+                        loadData(event.target.id);
+                    }
+                });
             })
             .catch(error => {
                 console.error('Failed to load pages:', error);
             });
     
-        document.getElementById('pagination').addEventListener('click', function(event) {
-            if (event.target.classList.contains('page-link')) {
-                loadData(event.target.id);
-            }
-        });
     }
     
     function loadDataTr(page) {

@@ -85,7 +85,6 @@ window.onload = function () {
     });
 
 
-    btn.addEventListener('click', submitForm)
 
     function submitForm() {
 
