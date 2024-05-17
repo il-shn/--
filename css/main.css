@@ -1,5 +1,5 @@
 body{
-    background: linear-gradient(90deg, rgb(94, 45, 229), rgb(221, 209, 186));
+    background: linear-gradient(90deg, rgb(199, 198, 196), rgb(77, 71, 48));
 }
 main{
     display: flex;
@@ -103,8 +103,14 @@ main{
     width: 150px;
     margin-top: 75px;
 }
+
+#slidebarImg{
+    width: 20%;
+}
+
 .selectCustom{
-margin: 0px 0 20px 0;}
+margin: 0px 0 20px 0;
+}
 /* .cardSection{
     width: 100%;
     display: flex;

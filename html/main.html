@@ -8,87 +8,36 @@
     <link rel="stylesheet" href="../css/main.css">
   </head>
   <body>
-    <!-- <header>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">MG</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"  ia-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown-toggle
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
-    </header> -->
       <main>
         <div class="sideBar">
           <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-light" style="width: 280px; height: 100%; min-height: 660px;">
-            <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <a href="#" class="d-flex justify-content-around mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
               <!-- <svg class="bi pe-none me-2" width="40" height="32"
               </svg> -->
               <span class="fs-4">MoneyGuard</span>
+              <img src="../profil.png" alt="" id="slidebarImg">
             </a>
             <hr>
-            <ul class="nav nav-pills flex-column mb-auto">
-              <li class="nav-item">
-                <a href="../html/moneyTransferCard.html" class="nav-link active" aria-currnt="page">
-                  <img src="#" alt="">
-                Money Card Transfers
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="../html/moneyTransferIBAN.html" class="nav-link text-dark" aria-currnt="page">
-                  <img src="#" alt="">
-                Money IBAN Transfers
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link text-dark ">
-                  Credit
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link text-dark">
-                  Deposit
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link text-dark">
-                  Money Box
-                </a>
-              </li>
-              <li>
-                <a href="../html/currencyExchange.html" class="nav-link text-dark">
-                  Exchange
-                </a>
-              </li>
-              <li>
-                <a href="#" class="nav-link text-dark">
-                  
-                </a>
-              </li>
-            </ul>
+              <div class="list-group list-group-flush">
+                <a href="/moneyTransfer/getMineCurrency
+                " class="list-group-item list-group-item-action">Mine Currencies</a>
+                <a href="/moneyTransfer/cardTransfer
+                " class="list-group-item list-group-item-action">Money Card Transfers</a>
+                <a href="/" class="list-group-item list-group-item-action">Money IBAN Transfers</a>
+                <a href="/moneyTransfer/IBANTransfer
+                " class="list-group-item list-group-item-action">Credit</a>
+                <a href="/" class="list-group-item list-group-item-action">Deposit</a>
+                <a href="/" class="list-group-item list-group-item-action">Money Box</a>
+                <a href="/" class="list-group-item list-group-item-action">Exchange</a>
+                <a class="list-group-item list-group-item-action disabled" aria-disabled="true">A disabled link item</a>
+              </div>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>                  
             <hr>
             <div class="dropdown">
               <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle show" data-bs-toggle="dropdown" aria-expanded="true">
@@ -99,7 +48,6 @@
             </div>
           </div>
         </div>
-
         
         <div class="mainBlock">
           <div class="wrapper">
@@ -114,7 +62,6 @@
                   <select class="form-select selectCustom currencyList" size="7" aria-label="Size 10 select example" id="" action="">
                     <!-- <option class="dropdown-item disabled text-body-secondary">Chouse currency</option> -->
                     <!-- <option><a class="dropdown-item" href="#">Another action</a></option> -->
-                    <option><hr class="dropdown-divider"></option>
                   </select>
                   <button type="submit" class="btn btn-secondary">Submit</button>
                 </form>
@@ -154,6 +101,7 @@
                 <h1 class="fw-lighter">Replenishment</h1>
                 <select class="form-select selectCustom" size="5" aria-label="Size 5 select example" id="replenishSelect" action="submit">
                 </select>
+                <div id="replenishBox"></div>
               </div>
             </section>
 

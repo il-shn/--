@@ -28,8 +28,8 @@ window.onload = function(){
         })
     }
     
-    
     let currencyList = document.querySelector('.currencyList');
+    
     sendGetRequest('GET', reqestCurrencyListURL)
     .then(data => {
         let currencyItems = data.data;
@@ -48,7 +48,6 @@ window.onload = function(){
 
     // // ================================
     
-    console.log(currencyList.value);
     
     
     // // Post Currency option (Create account) 
@@ -75,19 +74,15 @@ window.onload = function(){
         })
 
     }
-    currencyList.onchange = function(){
-        console.log(this.value);
-    }
 
     document.getElementById('currencyForm').addEventListener('submit', function(e) {
         e.preventDefault()
           
         sendPostRequest('POST', 'https://moneyguard-fc72823844dd.herokuapp.com/main/api/createAccount', {
-            "currencyName": selectedText })
+            "currencyName": currencyList.value })
             .then(response => {
                 console.log('Успішна відповідь:', response);
-                profileGetRequest()
-                alert(`Account with ${selectedText} currency has created successfully`);
+                alert(`Account with ${currencyList.value} currency has created successfully`);
             })
             .catch(error => {
                 console.error('Помилка:', error);
@@ -108,7 +103,6 @@ window.onload = function(){
     fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/profile', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
             'X-XSRF-TOKEN': csrfToken
         }
     })
@@ -121,8 +115,7 @@ window.onload = function(){
         })
         .then(profileDataResponse => {
             if (profileDataResponse.success = true) {
-                console.log(profileDataResponse.message);
-                console.log(profileDataResponse.success);
+                console.log(profileDataResponse);
 
                 let profileList = document.querySelector('#profileList');
         
@@ -181,7 +174,7 @@ window.onload = function(){
                     }
                 }
                 titulImg()  
-    
+                // alert(profileDataResponse.message);
             
             } else {
                 console.log(profileDataResponse.message);
@@ -201,8 +194,8 @@ window.onload = function(){
 
     let replenishSelect = document.querySelector('#replenishSelect');
     sendGetRequest('GET', reqestCurrencyListURL)
-    .then(data => {
-        let currencyItems = data.data;
+    .then(response => {
+        let currencyItems = response.data;
         if (currencyItems.length > 0) {
             currencyItems.forEach(item => {
                 let option = document.createElement('option');
@@ -212,40 +205,38 @@ window.onload = function(){
             });
         } else {
             console.log('No available currency');
+            console.log(response);
         }
     })
     .catch(err => console.log(err))
 
+    replenishSelect.onchange = function(){
 
-    console.log(replenishSelect);
-    const selectedOption = replenishSelect.options[replenishSelect.selectedIndex];
-    const selectedText = selectedOption.text;
-    console.log(selectedText);
-
-    fetch('/main/api/cheatingAccountReplenishment', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-XSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify({
-            "currencyName": selectedText
+        fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/cheatingAccountReplenishment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({
+                "currencyName": replenishSelect.value
+            })
         })
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log(data.success);
-            alert(data.message)
-        } else {
-            return response.text().then(text => {
-                throw new Error(text || 'Error');
-            });
-        }
-    })
-    .catch(error => {
-        alert('Error: ' + error.message);
-        console.log(data.success);
-    });
+        .then(response => {
+            if (response.success.ok) {
+                console.log(response);
+                let replanish = document.querySelector('#replenishBox')
+                replanish.innerHTML = `<h6>${response.message}</h6>`
+                // alert(JSON.stringify(response.message))
+            } else {
+                return response.text().then(text => {
+                    throw new Error(text || 'Error');
+                });
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);        });
+    }
 
 
     // // ================================
@@ -255,190 +246,192 @@ window.onload = function(){
     // // Get Exchange Rates
 
 
-    // fetch('/main/api/exchangeRates', {
-    //     method: 'GET',
-    //     headers: {
-    //         'X-XSRF-TOKEN': csrfToken
-    //     }   
-    // })
-    // .then(response => {
-    //     if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //     }
-    //     return response.json();
-    // })
-    // .then(data => {
-    //     if (data.success=true) {
-    //         console.log('data.success=true');
-    //         alert(data.message)
+    fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/exchangeRates', {
+        method: 'GET',
+        headers: {
+            'X-XSRF-TOKEN': csrfToken
+        }   
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(response => {
+        if (response.success=true) {
+            console.log('response.success=true');
+            console.log(response.message);
 
-    //         const currencies = data.data;
-    //         const currencyContainer = document.getElementById('currencyContainer');
+            const currencies = response.data;
+            const currencyContainer = document.getElementById('currencyContainer');
             
-    //         currencies.forEach(currency => {
-    //             const currencyBlock = document.createElement('div');
-    //             currencyBlock.classList.add('currency');
+            currencies.forEach(currency => {
+                const currencyBlock = document.createElement('div');
+                currencyBlock.classList.add('currency');
                 
-    //             currencyBlock.innerHTML = `
-    //             <h4>${currency.shortName}</h4>
-    //             <div>Sell Rate: ${currency.sellRate}</div>
-    //             <div>Buy Rate: ${currency.buyRate}</div>
-    //             `;
-    //             currencyContainer.appendChild(currencyBlock);
-    //         });
-    //     } else {
-    //         console.log('data.success!=true');
-    //         alert('Error')
-    //     }
-    // })
-    // .catch(error => {
-    //     console.error('There was a problem with the fetch operation:', error);
-    // });    
+                currencyBlock.innerHTML = `
+                <h4>${currency.shortName}</h4>
+                <div>Sell Rate: ${currency.sellRate}</div>
+                <div>Buy Rate: ${currency.buyRate}</div>
+                `;
+                currencyContainer.appendChild(currencyBlock);
+            });
+        } else {
+            console.log(response);
+            // alert('Error')
+        }
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });    
     
 
 
 
     // // Пагінація аккаунтів
 
-    //     loadPages();
-    //     loadData(0);
+        loadPages();
+        loadData(0);
     
     
-    // function loadPages() {
-    //     fetch('/admin/count')
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             const pageCount = data.data.totalPages;
-    //             const pagesContainer = document.getElementById('pages');
+    function loadPages() {
+        fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/account/0')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(response => {
+                const pageCounts = response.data.totalPages;
+                const pageContainer = document.getElementById('pages');
+            
+                for (let i = 0; i < pageCounts; i++) {
+                    const pageLink = document.createElement('a');
+                    pageLink.classList.add('page-link');
+                    pageLink.id = i;
+                    pageLink.textContent = 'Page ' + (i + 1);
+            
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('page-item');
+                    listItem.appendChild(pageLink);
+            
+                    pageContainer.appendChild(listItem);
+                }
+            })
+            .catch(error => {
+                console.error('Failed to load pages:', error);
+            });
     
-    //             for (let i = 0; i < pageCount; i++) {
-    //                 const pageLink = document.createElement('a');
-    //                 pageLink.classList.add('page-link');
-    //                 pageLink.id = i;
-    //                 pageLink.textContent = 'Page ' + (i + 1);
+        document.getElementById('pages').addEventListener('click', function(event) {
+            if (event.target.classList.contains('page-link')) {
+                loadData(response, event.target.id);
+            }
+        });
+    }
     
-    //                 const listItem = document.createElement('li');
-    //                 listItem.classList.add('page-item');
-    //                 listItem.appendChild(pageLink);
+    function loadData(page) {
+        const dataContainer = document.getElementById('data');
+        dataContainer.innerHTML = '';
     
-    //                 pagesContainer.appendChild(listItem);
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Failed to load pages:', error);
-    //         });
-    
-    //     document.getElementById('pages').addEventListener('click', function(event) {
-    //         if (event.target.classList.contains('page-link')) {
-    //             loadData(event.target.id);
-    //         }
-    //     });
-    // }
-    
-    // function loadData(page) {
-    //     const dataContainer = document.getElementById('data');
-    //     dataContainer.innerHTML = ''; 
-    
-    //     fetch('/admin/geo?page=' + page)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             data.data.content.forEach(item => {
-    //                 const row = document.createElement('tr');
-    //                 row.innerHTML = `
-    //                     <td>${item.cardIds[0].cardNumber}</td>
-    //                     <td>${item.cardIds[0].ownerName}</td>
-    //                     <td>${item.amountOfMoney}</td>
-    //                     <td>${item.currencyName}</td>
-    //                 `;
-    //                 dataContainer.appendChild(row);
-    //             });
-    //         })
-    //         .catch(error => {
-    //             console.error('Failed to load data:', error);
-    //         });
-    // }
-    
+        fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/account/0' )
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(response => {
+                response.data.content.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="card-title">${item.cardIds[0].cardNumber}</td>
+                        <td class="card-text">${item.cardIds[0].ownerName}</td>
+                        <td class="card-text">${item.amountOfMoney}</td>
+                        <td class="card-text">${item.currencyName}</td>
+                    `;
+                    dataContainer.appendChild(row);
+                        });
+            })
+            .catch(error => {
+                console.error('Failed to load data:', error);
+            });
+    }
+
+
+
     // //ПАгінація транзакцій
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     loadPages();
-    //     loadData(0);
-    // });
+
+    loadPagesTr();
+    loadDataTr(0);
     
-    // function loadPages() {
-    //     fetch('/main/api/transaction/{0}')
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             const pageCount = data.data.totalPages;
-    //             const pagesContainer = document.getElementById('pagination');
     
-    //             for (let i = 0; i < pageCount; i++) {
-    //                 const pageLink = document.createElement('a');
-    //                 pageLink.classList.add('page-link');
-    //                 pageLink.id = i;
-    //                 pageLink.textContent = 'Page ' + (i + 1);
+    function loadPagesTr() {
+        fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/transaction/0')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(responseTransaction => {
+                const pageCount = responseTransaction.data.totalPages;
+                const pagesContainer = document.getElementById('pagination');
     
-    //                 const listItem = document.createElement('li');
-    //                 listItem.classList.add('page-item');
-    //                 listItem.appendChild(pageLink);
+                for (let i = 0; i < pageCount; i++) {
+                    const pageLink = document.createElement('a');
+                    pageLink.classList.add('page-link');
+                    pageLink.id = i;
+                    pageLink.textContent = 'Page ' + (i + 1);
     
-    //                 pagesContainer.appendChild(listItem);
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Failed to load pages:', error);
-    //         });
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('page-item');
+                    listItem.appendChild(pageLink);
     
-    //     document.getElementById('pagination').addEventListener('click', function(event) {
-    //         if (event.target.classList.contains('page-link')) {
-    //             loadData(event.target.id);
-    //         }
-    //     });
-    // }
+                    pagesContainer.appendChild(listItem);
+                }
+            })
+            .catch(error => {
+                console.error('Failed to load pages:', error);
+            });
     
-    // function loadData(page) {
-    //     const dataContainer = document.getElementById('accountList');
-    //     dataContainer.innerHTML = ''; 
+        document.getElementById('pagination').addEventListener('click', function(event) {
+            if (event.target.classList.contains('page-link')) {
+                loadData(event.target.id);
+            }
+        });
+    }
     
-    //     fetch(`/main/api/transaction/{0}`)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             data.data.content.forEach(transaction => {
-    //                 const listItem = document.createElement('li');
-    //                 listItem.classList.add('list-group-item');
-    //                 listItem.innerHTML = `
-    //                     <p>Date/Time: ${transaction.dateTimeOfTransaction}</p>
-    //                     <p>Name: ${transaction.nameOfTransaction}</p>
-    //                     <p>From: ${transaction.fromCardNumber}</p>
-    //                     <p>To: ${transaction.toCardNumber}</p>
-    //                     <p>Amount: ${transaction.howMuch}</p>
-    //                 `;
-    //                 dataContainer.appendChild(listItem);
-    //             });
-    //         })
-    //         .catch(error => {
-    //             console.error('Failed to load data:', error);
-    //         });
-    // }
+    function loadDataTr(page) {
+        const dataContainer = document.getElementById('accountList');
+        dataContainer.innerHTML = ''; 
+    
+        fetch(`https://moneyguard-fc72823844dd.herokuapp.com/main/api/transaction/0`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(responseTransaction => {
+            responseTransaction.data.content.forEach(transaction => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('list-group-item');
+                listItem.innerHTML = `
+                    <p>Date/Time: ${transaction.dateTimeOfTransaction}</p>
+                    <p>Name: ${transaction.nameOfTransaction}</p>
+                    <p>From: ${transaction.fromCardNumber}</p>
+                    <p>To: ${transaction.toCardNumber}</p>
+                    <p>Amount: ${transaction.howMuch}</p>
+                `;
+                dataContainer.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Failed to load data:', error);
+        });
+    }
 
 
     // //Вакантний get
