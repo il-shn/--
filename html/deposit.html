@@ -9,7 +9,7 @@
   </head>
   <body>
       <main>
-            <div class="sideBar">
+        <div class="sideBar">
             <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-light" style="width: 280px; height: 100%; min-height: 660px;">
                 <a href="#" class="d-flex justify-content-around mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <!-- <svg class="bi pe-none me-2" width="40" height="32"
@@ -57,41 +57,61 @@
                     <section class="sectionBox">
                     <div class="container">
                         <form action="
-                        " method="post" id="currencyForm">
+                        " method="" id="currencyForm">
 
                             <h1 class="fw-lighter">Deposit</h1>
-                                <h7 class="fw-light text-body-secondary"></h7>
-                                <div class="d-flex flex-row justify-content-between">
-                                    <div id="block1" class="data-block"></div>
-                                    <div id="block2" class="data-block"></div>
-                                    <div id="block3" class="data-block"></div>
-                                </div>
+                            <h7 class="fw-light text-body-secondary"></h7>
+                            <div class="d-flex flex-row justify-content-between">
+                                <div id="block1" class="data-block"></div>
+                                <div id="block2" class="data-block"></div>
+                                <div id="block3" class="data-block"></div>
+                            </div>
 
-                                <h7 class="fw-light text-body-secondary">
-                                    Select deposit plan
-                                </h7>
-                                
-                                <label for="currencyNameTo"></label>
-                                <select class="form-select selectCustom currencyList" size="1" aria-label="Size 3 select example" id="select" action="">
-                                </select>
-                                
-                                <h7 class="fw-light text-body-secondary">
-                                    Select currency
-                                </h7>
-                                <label for="currencyNameTo"></label>
-                                <select class="form-select selectCustom currencyList" size="1" aria-label="Size  select example" id="selectCurr" action="">
-                                </select>
+                            <h7 class="fw-light text-body-secondary">
+                                Select deposit plan
+                            </h7>
+                            
+                            <select class="form-select selectCustom currencyList" size="1" aria-label="Size 3 select example" id="select" action="">
+                            </select>
+                            
+                            <h7 class="fw-light text-body-secondary">
+                                Select currency
+                            </h7>
+                            <select class="form-select selectCustom currencyList" size="1" aria-label="Size  select example" id="selectCurr" action="">
+                            </select>
 
-                                <div class="input-group mb-3">
-                                    <input type="number" class="form-control" placeholder="100$" step="0.01" aria-label="Recipient's username" id="amount" aria-describedby="basic-addon2" required>
-                                    <span class="input-group-text" id="basic-addon2"> Amount</span>
-                                  </div>
-                                                                  
-                                <button type="submit" class="btn btn-secondary">Submit</button>
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control" placeholder="100$" step="0.01" aria-label="Recipient's username" id="amount" aria-describedby="basic-addon2" required>
+                                <span class="input-group-text" id="basic-addon2"> Amount</span>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-secondary">Submit</button>
                         </form>
-                    
+                        
                     </div>
-                    </section>
+                </section>
+                
+                
+                <section class="section">
+                    <div class="">
+                        <h1 class="fw-lighter p-4">Active Service</h1>
+                        <ul id="activeService" class=""></ul>
+                    </div>
+                </section>
+                
+                
+                <section class="sectionBox">
+                    <!-- <div class="container"> -->
+                        <form action="">
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control" placeholder="100$" step="0.01" aria-label="Recipient's username" id="amoun" aria-describedby="basic-addon2" required>
+                                <span class="input-group-text" id="basic-addon3"> Amount</span>
+                            </div>
+                            <button type="submit" class="btn btn-secondary">Submit</button>
+                        </form>
+                    <!-- </div> -->
+                </section>
+
                 </div>
                 </div>
         <script src="../js/deposit.js"></script>
