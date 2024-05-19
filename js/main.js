@@ -1,4 +1,4 @@
- 
+
 window.onload = function(){
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
@@ -192,6 +192,8 @@ window.onload = function(){
 
     // // Replenishment
 
+    
+
     let replenishSelect = document.querySelector('#replenishSelect');
     sendGetRequest('GET', reqestCurrencyListURL)
     .then(response => {
@@ -210,34 +212,43 @@ window.onload = function(){
     })
     .catch(err => console.log(err))
 
-    replenishSelect.onchange = function(){
 
-        fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/cheatingAccountReplenishment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-XSRF-TOKEN': csrfToken
-            },
-            body: JSON.stringify({
-                "currencyName": replenishSelect.value
-            })
-        })
-        .then(response => {
+    document.getElementById('replenishForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        let replanish = document.querySelector('#replenishBox')
+        replanish.innerHTML = ""
+
+        try {
+            const response = await fetch('https://moneyguard-fc72823844dd.herokuapp.com/main/api/cheatingAccountReplenishment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-XSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                    "currencyName": replenishSelect.value
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
             if (response.success.ok) {
-                console.log(response);
                 let replanish = document.querySelector('#replenishBox')
                 replanish.innerHTML = `<h6>${response.message}</h6>`
-                // alert(JSON.stringify(response.message))
-            } else {
-                return response.text().then(text => {
-                    throw new Error(text || 'Error');
-                });
             }
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);        });
-    }
-
+            console.log('Успішна відповідь:', result);
+            alert(result.message);
+        } catch (error) {
+            console.error('Помилка:', error);
+            let replanish = document.querySelector('#replenishBox')
+            replanish.innerHTML = ""
+            replanish.innerHTML = `<h6>${'Помилка: ' + error.message}</h6>`
+            // alert('Помилка: ' + error.message);
+        }
+    });
 
     // // ================================
     

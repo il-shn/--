@@ -1,5 +1,5 @@
 body{
-    background: linear-gradient(90deg, rgb(199, 198, 196), rgb(77, 71, 48));
+    background: linear-gradient(45deg, rgb(77, 71, 48), #ffecd4);
 }
 main{
     display: flex;
@@ -46,8 +46,10 @@ main{
 } */
 .sum{
     display: flex;
+    justify-content: center;
     align-items: center;
     color: white;
+    min-width: 300px;
 }
 .cardd{
     border-radius: 10px;
@@ -70,7 +72,7 @@ main{
     width: 100%;    
     padding: 40px;
     border-radius: 8px;
-    /* margin: 40px 0 40px 0; */
+    margin-bottom: 80px;
 }
 #currencyContainer{
     display: flex;
