@@ -1,17 +1,17 @@
 window.onload = async function () {
-    let urlGetVariantDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getVariant/deposit';
-    let urlPostGetServiceRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getService/deposit';
+    let urlGetVariantCreditRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getVariant/credit';
+    let urlPostGetServiceRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getService/credit';
     let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency';
-    let urlServicePayDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/pay/deposit';
+    let urlServicePayCreditRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/pay/credit';
     
-    let urlWithdrawDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com//service/withdraw/deposit/';
-    let urlShowDepositsRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/showActiveService/deposit';
+    let urlWithdrawCreditRequest = 'https://moneyguard-fc72823844dd.herokuapp.com//service/withdraw/credit/';
+    let urlShowCreditsRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/showActiveService/credit';
 
     
     let serviceId;
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
-    let depositSelect = document.querySelector('#selectPlan');
+    let creditSelect = document.querySelector('#selectPlan');
     let selectCurr = document.querySelector('#selectCurr');
     let amount = document.querySelector('#amountPay');
     const dataContainer = document.getElementById('activeService');
@@ -19,7 +19,7 @@ window.onload = async function () {
     let selectServiceWithdraw = document.querySelector('#selectService');
 
     try {
-        const response = await fetch(urlGetVariantDepositRequest, {
+        const response = await fetch(urlGetVariantCreditRequest, {
             method: 'GET',
             headers: {
                 'X-XSRF-TOKEN': csrfToken
@@ -52,7 +52,7 @@ window.onload = async function () {
             const option = document.createElement('option');
             option.textContent = name;
             option.value = name;
-            depositSelect.appendChild(option);
+            creditSelect.appendChild(option);
         });
     } catch (error) {
         console.error('Помилка: ' + error.message);
@@ -94,7 +94,7 @@ window.onload = async function () {
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "serviceName": depositSelect.value,
+                    "serviceName": creditSelect.value,
                     "currencyName": selectCurr.value,
                     "amount": amount.value
                 })
@@ -115,7 +115,7 @@ window.onload = async function () {
     });
 
     try {
-        const response = await fetch(urlShowDepositsRequest);
+        const response = await fetch(urlShowCreditsRequest);
 
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -170,7 +170,7 @@ window.onload = async function () {
         e.preventDefault();
 
         try {
-            const response = await fetch(urlServicePayDepositRequest, {
+            const response = await fetch(urlServicePayCreditRequest, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -202,7 +202,7 @@ window.onload = async function () {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${urlWithdrawDepositRequest}${serviceId}`, {
+            const response = await fetch(`${urlWithdrawCreditRequest}${serviceId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

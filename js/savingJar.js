@@ -1,17 +1,17 @@
 window.onload = async function () {
-    let urlGetVariantDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getVariant/deposit';
-    let urlPostGetServiceRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getService/deposit';
+    let urlGetVariantSavingJarRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getVariant/savingjar';
+    let urlPostGetServiceRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getService/savingjar';
     let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency';
-    let urlServicePayDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/pay/deposit';
+    let urlServicePaySavingJarRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/pay/savingjar';
     
-    let urlWithdrawDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com//service/withdraw/deposit/';
-    let urlShowDepositsRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/showActiveService/deposit';
+    let urlWithdrawSavingJarRequest = 'https://moneyguard-fc72823844dd.herokuapp.com//service/withdraw/savingjar/';
+    let urlShowSavingJarsRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/showActiveService/savingjar';
 
     
     let serviceId;
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
-    let depositSelect = document.querySelector('#selectPlan');
+    let savingjarSelect = document.querySelector('#selectPlan');
     let selectCurr = document.querySelector('#selectCurr');
     let amount = document.querySelector('#amountPay');
     const dataContainer = document.getElementById('activeService');
@@ -19,7 +19,7 @@ window.onload = async function () {
     let selectServiceWithdraw = document.querySelector('#selectService');
 
     try {
-        const response = await fetch(urlGetVariantDepositRequest, {
+        const response = await fetch(urlGetVariantSavingJarRequest, {
             method: 'GET',
             headers: {
                 'X-XSRF-TOKEN': csrfToken
@@ -33,7 +33,6 @@ window.onload = async function () {
         const { data } = await response.json();
         const block1 = document.getElementById('block1');
         const block2 = document.getElementById('block2');
-        const block3 = document.getElementById('block3');
 
         function displayData(block, item) {
             const [name, percentage, months] = item;
@@ -45,14 +44,13 @@ window.onload = async function () {
         }
         displayData(block1, data[0]);
         displayData(block2, data[1]);
-        displayData(block3, data[2]);
 
         data.forEach(item => {
             const name = item[0];
             const option = document.createElement('option');
             option.textContent = name;
             option.value = name;
-            depositSelect.appendChild(option);
+            savingjarSelect.appendChild(option);
         });
     } catch (error) {
         console.error('Помилка: ' + error.message);
@@ -94,7 +92,7 @@ window.onload = async function () {
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "serviceName": depositSelect.value,
+                    "serviceName": savingjarSelect.value,
                     "currencyName": selectCurr.value,
                     "amount": amount.value
                 })
@@ -115,7 +113,7 @@ window.onload = async function () {
     });
 
     try {
-        const response = await fetch(urlShowDepositsRequest);
+        const response = await fetch(urlShowSavingJarsRequest);
 
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -170,7 +168,7 @@ window.onload = async function () {
         e.preventDefault();
 
         try {
-            const response = await fetch(urlServicePayDepositRequest, {
+            const response = await fetch(urlServicePaySavingJarRequest, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -202,7 +200,7 @@ window.onload = async function () {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${urlWithdrawDepositRequest}${serviceId}`, {
+            const response = await fetch(`${urlWithdrawSavingJarRequest}${serviceId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
