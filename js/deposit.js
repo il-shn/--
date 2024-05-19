@@ -4,7 +4,7 @@ window.onload = async function () {
     let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency';
     let urlServicePayDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/pay/deposit';
     
-    let urlWithdrawDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com//service/withdraw/deposit/';
+    let urlWithdrawDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/withdraw/deposit/';
     let urlShowDepositsRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/showActiveService/deposit';
 
     
@@ -13,7 +13,8 @@ window.onload = async function () {
 
     let depositSelect = document.querySelector('#selectPlan');
     let selectCurr = document.querySelector('#selectCurr');
-    let amount = document.querySelector('#amountPay');
+    let amountPay = document.querySelector('#amountPay');
+    let amountCred = document.querySelector('#amountCred');
     const dataContainer = document.getElementById('activeService');
     let selectServicePay = document.querySelector('#selectServicePay');
     let selectServiceWithdraw = document.querySelector('#selectService');
@@ -96,7 +97,7 @@ window.onload = async function () {
                 body: JSON.stringify({
                     "serviceName": depositSelect.value,
                     "currencyName": selectCurr.value,
-                    "amount": amount.value
+                    "amount": amountCred.value
                 })
             });
 
@@ -146,9 +147,11 @@ window.onload = async function () {
                 <h5 class="fw-lighter">Accumulated: ${data.accumulated}</h5>
                 `;
                 dataContainer.appendChild(listItem);
-                serviceId = data.serviceId
+                servId = data.serviceId
             });
 
+            console.log(data);
+            console.log(data.serviceId);
             data.serviceId.forEach(item => {
                 let option = document.createElement('option');
                 let option2 = document.createElement('option');
@@ -177,8 +180,8 @@ window.onload = async function () {
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "id": serviceId,
-                    "amount": amount.value
+                    "id": servId,
+                    "amount": amountPay.value
                 })
             });
 
@@ -209,7 +212,7 @@ window.onload = async function () {
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "id": serviceId,
+                    "id": servId,
                 })
             });
 
@@ -226,8 +229,10 @@ window.onload = async function () {
         }
     });
 
-
-
-
-
+    let btnWithdraw = document.querySelector('#btnWithdraw')
+    if (selectServiceWithdraw ===true ) {
+        btnWithdraw.disabled = false;
+    } else {
+        btnWithdraw.disabled = true;
+    }
 };

@@ -4,19 +4,20 @@ window.onload = async function () {
     let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency';
     let urlServicePaySavingJarRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/pay/savingjar';
     
-    let urlWithdrawSavingJarRequest = 'https://moneyguard-fc72823844dd.herokuapp.com//service/withdraw/savingjar/';
+    let urlWithdrawSavingJarRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/withdraw/savingjar/';
     let urlShowSavingJarsRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/showActiveService/savingjar';
 
     
-    let serviceId;
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
-
+    
     let savingjarSelect = document.querySelector('#selectPlan');
     let selectCurr = document.querySelector('#selectCurr');
     let amount = document.querySelector('#amountPay');
-    const dataContainer = document.getElementById('activeService');
     let selectServicePay = document.querySelector('#selectServicePay');
     let selectServiceWithdraw = document.querySelector('#selectService');
+    let servId;
+    const dataContainer = document.getElementById('activeService');
+    const inputId = document.getElementById('inputId');
 
     try {
         const response = await fetch(urlGetVariantSavingJarRequest, {
@@ -144,7 +145,7 @@ window.onload = async function () {
                 <h5 class="fw-lighter">Accumulated: ${data.accumulated}</h5>
                 `;
                 dataContainer.appendChild(listItem);
-                serviceId = data.serviceId
+                servId = data.serviceId
             });
 
             data.serviceId.forEach(item => {
@@ -175,7 +176,7 @@ window.onload = async function () {
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "id": serviceId,
+                    "id": inputId,
                     "amount": amount.value
                 })
             });
@@ -193,21 +194,21 @@ window.onload = async function () {
         }
     });
     
-    
+    console.log(servId);
     
     
     document.getElementById('withdrawForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${urlWithdrawSavingJarRequest}${serviceId}`, {
+            const response = await fetch(`${urlWithdrawSavingJarRequest}${servId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "id": serviceId,
+                    "id": servId,
                 })
             });
 
@@ -224,8 +225,10 @@ window.onload = async function () {
         }
     });
 
-
-
-
-
+    let btnWithdraw = document.querySelector('#btnWithdraw')
+    if (selectServiceWithdraw === true ) {
+        btnWithdraw.disabled = false;
+    } else {
+        btnWithdraw.disabled = true;
+    }
 };

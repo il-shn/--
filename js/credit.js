@@ -226,8 +226,10 @@ window.onload = async function () {
         }
     });
 
-
-
-
-
+    let btnWithdraw = document.querySelector('#btnWithdraw')
+    if (selectServiceWithdraw ===true ) {
+        btnWithdraw.disabled = false;
+    } else {
+        btnWithdraw.disabled = true;
+    }
 };
