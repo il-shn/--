@@ -1,21 +1,21 @@
 window.onload = async function () {
-    let urlGetVariantSavingJarRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getVariant/savingjar';
-    let urlPostGetServiceRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getService/savingjar';
-    let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency';
-    let urlServicePaySavingJarRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/pay/savingjar';
-    
-    let urlWithdrawSavingJarRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/withdraw/savingjar/';
-    let urlShowSavingJarsRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/showActiveService/savingjar';
+        let herokuLink = 'https://moneyguard-fc72823844dd.herokuapp.com'    
+    // let herokuLink = ''
+    let urlGetVariantSavingJarRequest = herokuLink + '/service/getVariant/savingjar';
+    let urlPostGetServiceRequest = herokuLink + '/service/getService/savingjar';
+    let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency';
+    let urlServicePaySavingJarRequest = herokuLink + '/service/pay/savingjar';
+    let urlWithdrawSavingJarRequest = herokuLink + '/service/withdraw/savingjar/';
+    let urlShowSavingJarsRequest = herokuLink + '/service/showActiveService/savingjar';
 
     
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
     
     let savingjarSelect = document.querySelector('#selectPlan');
     let selectCurr = document.querySelector('#selectCurr');
-    let amount = document.querySelector('#amountPay');
-    let selectServicePay = document.querySelector('#selectServicePay');
-    let selectServiceWithdraw = document.querySelector('#selectService');
-    let servId;
+    let amountPay = document.querySelector('#amountPay');
+    let amountCred = document.querySelector('#amountCred');
+    let selectServiceWithdraw = document.querySelector('#selectServiceWithdraw');
     const dataContainer = document.getElementById('activeService');
     const inputId = document.getElementById('inputId');
 
@@ -95,7 +95,7 @@ window.onload = async function () {
                 body: JSON.stringify({
                     "serviceName": savingjarSelect.value,
                     "currencyName": selectCurr.value,
-                    "amount": amount.value
+                    "amount": amountCred.value
                 })
             });
 
@@ -107,6 +107,7 @@ window.onload = async function () {
 
             console.log('Успішна відповідь:', result);
             alert(result.message);
+            window.location.href = '/main/savingsJar';
         } catch (error) {
             console.error('Помилка:', error);
             alert('Помилка: ' + error.message);
@@ -131,32 +132,28 @@ window.onload = async function () {
 
         } else {
             
-            data.forEach(data => {
+            data.forEach(item => {
                 const listItem = document.createElement('li');
                 listItem.classList.add('list-group-item');
                 listItem.classList.add('fw-lighter');
                 listItem.innerHTML = `
-                <h5 class="fw-lighter serviceId">Service Id: ${data.serviceId}</h5>
-                <h5 class="fw-lighter">Service name: ${data.serviceName}</h5>
-                <h5 class="fw-lighter">Currency name: ${data.currencyName}</h5>
-                <h5 class="fw-lighter">Amount: ${data.amount}</h5>
-                <h5 class="fw-lighter">Interest rate per month: ${data.interestRatePerMonth}</h5>
-                <h5 class="fw-lighter">Service duration to: ${data.serviceDurationTo}</h5>
-                <h5 class="fw-lighter">Accumulated: ${data.accumulated}</h5>
+                <h5 class="fw-lighter serviceId">Service Id: ${item.serviceId}</h5>
+                <h5 class="fw-lighter">Service name: ${item.serviceName}</h5>
+                <h5 class="fw-lighter">Currency name: ${item.currencyName}</h5>
+                <h5 class="fw-lighter">Amount: ${item.amount}</h5>
+                <h5 class="fw-lighter">Interest rate per month: ${item.interestRatePerMonth}</h5>
+                <h5 class="fw-lighter">Service duration to: ${item.serviceDurationTo}</h5>
+                <h5 class="fw-lighter">Accumulated: ${item.accumulated}</h5>
                 `;
                 dataContainer.appendChild(listItem);
                 servId = data.serviceId
             });
 
-            data.serviceId.forEach(item => {
+            data.forEach(item => {
                 let option = document.createElement('option');
-                let option2 = document.createElement('option');
-                option.textContent = item;
-                option2.textContent = item;
-                option.value = item;
-                option2.value = item;
-                selectServicePay.appendChild(option);    
-                selectServiceWithdraw.appendChild(option2);    
+                option.textContent = item.serviceId;
+                option.value = item.serviceId;
+                selectServiceWithdraw.appendChild(option);    
             })
         }
 
@@ -177,7 +174,7 @@ window.onload = async function () {
                 },
                 body: JSON.stringify({
                     "id": inputId,
-                    "amount": amount.value
+                    "amount": amountPay.value
                 })
             });
 
@@ -188,27 +185,25 @@ window.onload = async function () {
             const result = await response.json();
             console.log('Успішна відповідь:', result);
             alert(result.message);
+            window.location.href = '/main/savingsJar';
         } catch (error) {
             console.error('Помилка:', error);
             alert('Помилка: ' + error.message);
         }
-    });
-    
-    console.log(servId);
-    
+    });    
     
     document.getElementById('withdrawForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${urlWithdrawSavingJarRequest}${servId}`, {
+            const response = await fetch(`${urlWithdrawSavingJarRequest}${selectServiceWithdraw.value}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "id": servId,
+                    "id": selectServiceWithdraw.value,
                 })
             });
 
@@ -219,6 +214,7 @@ window.onload = async function () {
             const result = await response.json();
             console.log('Успішна відповідь:', result);
             alert(result.message);
+            window.location.href = '/main/savingsJar';
         } catch (error) {
             console.error('Помилка:', error);
             alert('Помилка: ' + error.message);
@@ -226,7 +222,7 @@ window.onload = async function () {
     });
 
     let btnWithdraw = document.querySelector('#btnWithdraw')
-    if (selectServiceWithdraw === true ) {
+    if (selectServiceWithdraw.selectedIndex >= 0) {
         btnWithdraw.disabled = false;
     } else {
         btnWithdraw.disabled = true;

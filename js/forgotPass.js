@@ -18,22 +18,36 @@ $(document).ready(function() {
         });
     });
 });
-    //     fetch('https://jsonplaceholder.typicode.commoneyTransfer/IBANTransfer', {
-//     method: 'GET',
-//     headers: {
-//         // 'Content-Type': 'application/json',
-//         'X-XSRF-TOKEN': csrfToken
-//     },
-// })
-// .then(response => {
-//     if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//     }
-//     return response.json()
-// })
-// .then(data => {
-    
-// })
-// .catch(error => {
-//     alert('Помилка: ' + error.message);
-// });
+
+let urlForgotPassRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/registration/forgotPass'
+
+window.onload = function(){
+    document.getElementById('forgotForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        try {
+            const response = await fetch(urlServicePayDepositRequest, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-XSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({
+                    "id": serviceId,
+                    "amount": amount.value
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
+            console.log('Успішна відповідь:', result);
+            alert(result.message);
+        } catch (error) {
+            console.error('Помилка:', error);
+            alert('Помилка: ' + error.message);
+        }
+    });
+}

@@ -233,9 +233,11 @@ window.onload = function(){
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
             const result = await response.json();
-            if (response.success.ok) {
+            console.log(response);
+            console.log(response.success);
+            let banan = response.success
+            if (banan.ok) {
                 let replanish = document.querySelector('#replenishBox')
                 replanish.innerHTML = `<h6>${response.message}</h6>`
             }

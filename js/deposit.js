@@ -1,14 +1,13 @@
 window.onload = async function () {
-    let urlGetVariantDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getVariant/deposit';
-    let urlPostGetServiceRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/getService/deposit';
-    let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency';
-    let urlServicePayDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/pay/deposit';
+    let herokuLink = 'https://moneyguard-fc72823844dd.herokuapp.com'    
+    // let herokuLink = ''
+    let urlGetVariantDepositRequest = herokuLink + '/service/getVariant/deposit';
+    let urlPostGetServiceRequest = herokuLink + '/service/getService/deposit';    
+    let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency';
+    let urlServicePayDepositRequest = herokuLink + '/service/pay/deposit';    
+    let urlWithdrawDepositRequest = herokuLink + '/service/withdraw/deposit/';    
+    let urlShowDepositsRequest = herokuLink + '/service/showActiveService/deposit/';
     
-    let urlWithdrawDepositRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/withdraw/deposit/';
-    let urlShowDepositsRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/service/showActiveService/deposit';
-
-    
-    let serviceId;
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
     let depositSelect = document.querySelector('#selectPlan');
@@ -17,7 +16,7 @@ window.onload = async function () {
     let amountCred = document.querySelector('#amountCred');
     const dataContainer = document.getElementById('activeService');
     let selectServicePay = document.querySelector('#selectServicePay');
-    let selectServiceWithdraw = document.querySelector('#selectService');
+    let selectServiceWithdraw = document.querySelector('#selectServiceWithdraw');
 
     try {
         const response = await fetch(urlGetVariantDepositRequest, {
@@ -79,6 +78,7 @@ window.onload = async function () {
             option.value = item;
             selectCurr.appendChild(option);
         });
+
     } catch (error) {
         console.error('Помилка: ' + error.message);
         alert('Помилка: ' + error.message);
@@ -109,6 +109,7 @@ window.onload = async function () {
 
             console.log('Успішна відповідь:', result);
             alert(result.message);
+            window.location.href = '/main/deposit';
         } catch (error) {
             console.error('Помилка:', error);
             alert('Помилка: ' + error.message);
@@ -133,32 +134,30 @@ window.onload = async function () {
 
         } else {
             
-            data.forEach(data => {
+            data.forEach(item => {
                 const listItem = document.createElement('li');
                 listItem.classList.add('list-group-item');
                 listItem.classList.add('fw-lighter');
                 listItem.innerHTML = `
-                <h5 class="fw-lighter serviceId">Service Id: ${data.serviceId}</h5>
-                <h5 class="fw-lighter">Service name: ${data.serviceName}</h5>
-                <h5 class="fw-lighter">Currency name: ${data.currencyName}</h5>
-                <h5 class="fw-lighter">Amount: ${data.amount}</h5>
-                <h5 class="fw-lighter">Interest rate per month: ${data.interestRatePerMonth}</h5>
-                <h5 class="fw-lighter">Service duration to: ${data.serviceDurationTo}</h5>
-                <h5 class="fw-lighter">Accumulated: ${data.accumulated}</h5>
+                <h5 class="fw-lighter serviceId">Service Id: ${item.serviceId}</h5>
+                <h5 class="fw-lighter">Service name: ${item.serviceName}</h5>
+                <h5 class="fw-lighter">Currency name: ${item.currencyName}</h5>
+                <h5 class="fw-lighter">Amount: ${item.amount}</h5>
+                <h5 class="fw-lighter">Interest rate per month: ${item.interestRatePerMonth}</h5>
+                <h5 class="fw-lighter">Service duration to: ${item.serviceDurationTo}</h5>
+                <h5 class="fw-lighter">Accumulated: ${item.accumulated}</h5>
                 `;
                 dataContainer.appendChild(listItem);
                 servId = data.serviceId
             });
 
-            console.log(data);
-            console.log(data.serviceId);
-            data.serviceId.forEach(item => {
+            data.forEach(item => {
                 let option = document.createElement('option');
                 let option2 = document.createElement('option');
-                option.textContent = item;
-                option2.textContent = item;
-                option.value = item;
-                option2.value = item;
+                option.textContent = item.serviceId;
+                option2.textContent = item.serviceId;
+                option.value = item.serviceId;
+                option2.value = item.serviceId;
                 selectServicePay.appendChild(option);    
                 selectServiceWithdraw.appendChild(option2);    
             })
@@ -180,7 +179,7 @@ window.onload = async function () {
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "id": servId,
+                    "id": selectServicePay.value,
                     "amount": amountPay.value
                 })
             });
@@ -192,6 +191,7 @@ window.onload = async function () {
             const result = await response.json();
             console.log('Успішна відповідь:', result);
             alert(result.message);
+            window.location.href = '/main/deposit';
         } catch (error) {
             console.error('Помилка:', error);
             alert('Помилка: ' + error.message);
@@ -205,14 +205,14 @@ window.onload = async function () {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${urlWithdrawDepositRequest}${serviceId}`, {
+            const response = await fetch(`${urlWithdrawDepositRequest}${selectServiceWithdraw.value}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "id": servId,
+                    "id": selectServiceWithdraw.value,
                 })
             });
 
@@ -223,6 +223,7 @@ window.onload = async function () {
             const result = await response.json();
             console.log('Успішна відповідь:', result);
             alert(result.message);
+            window.location.href = '/main/deposit';
         } catch (error) {
             console.error('Помилка:', error);
             alert('Помилка: ' + error.message);
@@ -230,7 +231,7 @@ window.onload = async function () {
     });
 
     let btnWithdraw = document.querySelector('#btnWithdraw')
-    if (selectServiceWithdraw ===true ) {
+    if (selectServiceWithdraw.selectedIndex >= 0) {
         btnWithdraw.disabled = false;
     } else {
         btnWithdraw.disabled = true;
