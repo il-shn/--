@@ -119,10 +119,10 @@ window.onload = async function () {
             throw new Error('Network response was not ok');
         }
 
-        const { data } = await response.json();
-        console.log(success);
+
+        const { success, message, data } = await response.json();
         // console.log(data.message);
-        if (data.success !== true) {
+        if (success !== true) {
             const listItem = document.createElement('li');
             listItem.classList.add('list-group-item');
             listItem.classList.add('fw-lighter');
@@ -215,7 +215,7 @@ window.onload = async function () {
         }
     });
 
-
+ //dsdsd
 
 
 
