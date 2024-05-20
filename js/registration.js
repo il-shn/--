@@ -1,8 +1,7 @@
 window.onload = function () {
     let checkName = (name)=>/[a-zA-Z]/g.test(name);
     let checkNumber = (number)=>/^\+?[0-9]{10,12}$/.test(number);
-    let checkEmail = (email)=>/^([a-z\d\._-]+)@([a-z\d_-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/i
-    .test(email);
+    let checkEmail = (email)=>/^([a-z\d\._-]+)@([a-z\d_-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/i.test(email);
     let checkPassword = (password)=>/^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*]).{10,30}$/.test(password);
     
     let btn = document.querySelector('#btn')
@@ -87,7 +86,6 @@ window.onload = function () {
 
     function submitForm() {
 
-        const form = document.getElementById('registrationForm');
         const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
         const formData = {
             firstName: inputFirstName.value, 

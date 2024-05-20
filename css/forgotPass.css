@@ -1,5 +1,5 @@
 body {
-    font-family: 'Franklin Gothic Medium';
+    font-family: fantasy;
     background-color: #ffecd4;
     margin: 0;
     padding: 0;
@@ -13,13 +13,15 @@ body {
     background-color: white;
     padding: 40px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center;
     width: 300px;
     border-radius: 8px;
+    text-align: center;
+
 }
 
 .reset-password-container h2 {
     color: #333;
+    text-align: center;
 }
 
 .reset-password-container form {
@@ -32,7 +34,9 @@ body {
     margin-top: 10px;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    border-radius: px;
+    border-radius: 4px;
+    font-family: fantasy;
+
 }
 
 .reset-password-container button {
@@ -44,6 +48,9 @@ body {
     margin-top: 10px;
     cursor: pointer;
     border-radius: 4px;
+    font-family: fantasy;
+    font-size: 16px;
+
 }
 
 .reset-password-container button:hover {
@@ -57,4 +64,7 @@ form a {
 
 form a:hover {
     text-decoration: underline;
+}
+#text{
+    text-align: left;
 }

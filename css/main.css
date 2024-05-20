@@ -16,11 +16,6 @@ main{
     align-items: center;
     width: 80%;
 }
-/* .sideBar{
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-} */
 .titleblock{
     display: flex;
     flex-direction: column;
@@ -30,7 +25,6 @@ main{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    
 }
 #logo{
     width: 260px;
@@ -45,9 +39,6 @@ main{
     height: 60%;
     color: white;
 }
-/* div{
-    border: solid black 2px;
-} */
 .sum{
     display: flex;
     justify-content: center;
@@ -68,7 +59,7 @@ main{
 }
 .currencyMainBlock{
     color: white;
-    border: #cacaca solid 1px;
+    border: #f4f4f4 solid 1px;
     /* background: white; */
     display: flex;
     flex-direction: column;
@@ -76,7 +67,6 @@ main{
     width: 100%;    
     padding: 40px;
     border-radius: 8px;
-    margin-bottom: 80px;
 }
 #currencyContainer{
     display: flex;
@@ -90,7 +80,6 @@ main{
     background: white;
     color: rgb(52, 52, 52);
     padding: 40px;
-    /* border: solid 1px rgb(194, 194, 194); */
     border-radius: 8px;
     box-shadow: 0 14px 18px rgba(0,0,0,0.1);
     width: 100%;
@@ -103,10 +92,12 @@ main{
     flex-direction: row;
     justify-content: space-between;
     margin-top: 10%;
-    
-    
-
 }
+
+section:last-of-type{
+    margin-bottom: 10%;
+}
+
 .helmetImg{
     width: 150px;
     margin-top: 75px;
@@ -125,13 +116,11 @@ margin: 0px 0 20px 0;
     flex-direction: row;
     justify-content: space-between;
 } */
-
 .data-block {
-    border: 1px solid #ccc;
+    border: 1px solid #e5e3e3;
     padding: 10px;
     margin: 10px;
     width: 200px;
-    /* border-radius: 7px; */
 }
 .label {
     font-weight: bold;

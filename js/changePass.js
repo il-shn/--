@@ -5,20 +5,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
+    let checkPassword = (password)=>/^(?=.*[a-z])(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*]).{10,30}$/.test(password);
+    let btn = document.querySelector('#btn')
 
     if (!token) {
         window.location.href = '/login'; 
     }
 
-    document.querySelector('form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        var newPassword = document.querySelector('#newPassword').value;
-        var confirmPassword = document.querySelector('#confirmPassword').value;
+    var newPassword = document.querySelector('#newPassword');
+    var confirmPassword = document.querySelector('#confirmPassword');
 
-        if (newPassword !== confirmPassword) {
-            alert('Паролі не співпадають!');
-            return;
+    btn.addEventListener('click', function() {
+        let errorMessage = '';   
+    
+        if (!checkPassword(newPassword.value)) {
+            errorMessage += 'Invalid password. Please, use the instruction. \n';
         }
+
+        if (newPassword.value !== confirmPassword.value) {
+            errorMessage += 'Different passwords\n';
+        }
+
+        if (errorMessage !== '') {
+            alert('Validation error:\n' + errorMessage);
+        } else {
+            console.log('Validation passed.');
+            submitForm()
+        }
+
+    });
+
+    function submitForm() {
 
         fetch('http://localhost:8080/api/registration/changePass?token=' + token, {
             method: 'POST',
@@ -27,22 +44,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 'X-XSRF-TOKEN': csrfToken
             },
             body: JSON.stringify({
-                newPassword: newPassword,
-                confirmPassword: confirmPassword
+                "newPassword": newPassword.value,
+                "confirmPassword": confirmPassword.value
             })
         })
         .then(response => {
-            if (response.ok) {
-                alert('Пароль успішно змінено!');
+            if (!response.ok) {
+                throw new Error('Check your data');
+            }
+            return response.json();
+        })
+        .then(response => {
+            if (response.success) {
+                console.log('Success:', response.message);
+                alert(response.message);
                 window.location.href = '/login';
             } else {
-                return response.text().then(text => {
-                    throw new Error(text || 'Помилка');
-                });
+                throw new Error(response.message);
             }
         })
         .catch(error => {
             alert('Помилка: ' + error.message);
         });
-    });
+    }
 });

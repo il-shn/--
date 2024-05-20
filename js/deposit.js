@@ -230,6 +230,13 @@ window.onload = async function () {
         }
     });
 
+    let btnPayService = document.querySelector('#btnPayService')
+    if (selectServicePay.selectedIndex >= 0) {
+        btnPayService.disabled = false;
+    } else {
+        btnPayService.disabled = true;
+    }
+    
     let btnWithdraw = document.querySelector('#btnWithdraw')
     if (selectServiceWithdraw.selectedIndex >= 0) {
         btnWithdraw.disabled = false;

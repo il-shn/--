@@ -1,53 +1,59 @@
-$(document).ready(function() {
-    $('#forgotForm').on('submit', function(e) {
-        e.preventDefault(); // Запобігаємо стандартній поведінці форми
+let herokuLink = 'https://moneyguard-fc72823844dd.herokuapp.com'    
 
-        var email = $('#email').val(); // Отримуємо значення поля email
-        $.ajax({
-            url: 'http://localhost:8080/api/registration/forgotPass', // переконайтеся, що URL вірний
-            method: 'POST',
-            contentType: 'application/json', // Важливо вказати, що ви відправляєте JSON
-            data: JSON.stringify({ email: email }),
-            success: function(response) {
-                alert('Інструкції з відновлення паролю відправлені на ваш email.');
-                window.location.href = '/login';
-            },
-            error: function(xhr) {
-                alert('Помилка при відправленні email: ' + xhr.responseText);
-            }
-        });
-    });
-});
-
-let urlForgotPassRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/registration/forgotPass'
+let urlForgotPassRequest = herokuLink + '/api/registration/forgotPass'
 
 window.onload = function(){
-    document.getElementById('forgotForm').addEventListener('submit', async function(e) {
+    let checkEmail = (email)=>/^([a-z\d\._-]+)@([a-z\d_-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/i.test(email);
+    let email = document.querySelector('#email');
+    let btn = document.querySelector('#forgotBtn');
+    
+    btn.addEventListener('click', function(e) {
         e.preventDefault();
-
-        try {
-            const response = await fetch(urlServicePayDepositRequest, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-XSRF-TOKEN': csrfToken
-                },
-                body: JSON.stringify({
-                    "id": serviceId,
-                    "amount": amount.value
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const result = await response.json();
-            console.log('Успішна відповідь:', result);
-            alert(result.message);
-        } catch (error) {
-            console.error('Помилка:', error);
-            alert('Помилка: ' + error.message);
+        let errorMessage = '';   
+    
+        if (!checkEmail(email.value)) {
+            errorMessage += 'Invalid emaill. Try again. \n';
         }
+
+        if (errorMessage !== '') {
+            alert('Validation error:\n' + errorMessage);
+        } else {
+            console.log('Validation passed.');
+            submitForm()
+        }
+
     });
+
+
+
+    function submitForm() {
+
+        fetch(urlForgotPassRequest, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "email": email.value
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Check your data');
+            }
+            return response.json();
+        })
+        .then(response => {
+            if (response.success) {
+                console.log('Success:', response.message);
+                alert(response.message);
+                // window.location.href = '/login';
+            } else {
+                throw new Error(response.message);
+            }
+        })
+        .catch(error => {
+            alert('Помилка: ' + error.message);
+        });
+    }
 }

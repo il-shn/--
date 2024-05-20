@@ -6,7 +6,6 @@ window.onload = async function () {
     let urlPostGetServiceRequest = herokuLink + '/service/getService/credit';
     let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency';
     let urlServicePayCreditRequest = herokuLink + '/service/pay/credit';
-    let urlWithdrawCreditRequest = herokuLink + '/service/withdraw/credit/';
     let urlShowCreditsRequest = herokuLink + '/service/showActiveService/credit';
     
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
@@ -198,44 +197,11 @@ window.onload = async function () {
             alert('Помилка: ' + error.message);
         }
     });
-    
-    
-    
-    
-    document.getElementById('withdrawForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
 
-        try {
-            const response = await fetch(`${urlWithdrawCreditRequest}${selectServiceWithdraw.value}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-XSRF-TOKEN': csrfToken
-                },
-                body: JSON.stringify({
-                    "id": selectServiceWithdraw.value,
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const result = await response.json();
-            console.log('Успішна відповідь:', result);
-            alert(result.message);
-            window.location.href = '/main/credit';
-
-        } catch (error) {
-            console.error('Помилка:', error);
-            alert('Помилка: ' + error.message);
-        }
-    });
-
-    let btnWithdraw = document.querySelector('#btnWithdraw')
-    if (selectServiceWithdraw.selectedIndex >= 0) {
-        btnWithdraw.disabled = false;
+    let btnPayService = document.querySelector('#btnPayService')
+    if (selectServicePay.selectedIndex >= 0) {
+        btnPayService.disabled = false;
     } else {
-        btnWithdraw.disabled = true;
+        btnPayService.disabled = true;
     }
 };

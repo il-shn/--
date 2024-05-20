@@ -4,8 +4,7 @@ window.onload = function(){
     // let herokuLink = ''
 
     let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency';
-    const reqestCurrencyListURL = 'https://moneyguard-fc72823844dd.herokuapp.com/main/api/currency'
-
+    const reqestCurrencyListURL = herokuLink + '/main/api/currency'
     let urlCreateAccountRequest = herokuLink + '/main/api/createAccount'
     let urlProfileRequest = herokuLink + '/main/api/profile'
     let urlReplenishmentRequest = herokuLink + '/main/api/cheatingAccountReplenishment'
@@ -94,13 +93,13 @@ window.onload = function(){
             .then(response => {
                 console.log('Успішна відповідь:', response);
                 alert(`Account with ${currencyList.value} currency has created successfully`);
+                window.location.href = '/main';
             })
             .catch(error => {
                 console.error('Помилка:', error);
                 alert('Account with this currency has been created')
             });
     });    
-
 
     // ================================
 
@@ -236,10 +235,7 @@ window.onload = function(){
                 throw new Error('Network response was not ok');
             }
             const result = await response.json();
-            console.log(response);
-            console.log(response.success);
-            let banan = response.success
-            if (!banan) {
+            if (!response.success) {
                 let replanish = document.querySelector('#replenishBox')
                 replanish.innerHTML = `<h6>${response.message}</h6>`
             }

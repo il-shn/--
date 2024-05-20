@@ -17,7 +17,7 @@ window.onload = async function () {
     let amountCred = document.querySelector('#amountCred');
     let selectServiceWithdraw = document.querySelector('#selectServiceWithdraw');
     const dataContainer = document.getElementById('activeService');
-    const inputId = document.getElementById('inputId');
+    let inputId = document.getElementById('inputId');
 
     try {
         const response = await fetch(urlGetVariantSavingJarRequest, {
@@ -173,7 +173,7 @@ window.onload = async function () {
                     'X-XSRF-TOKEN': csrfToken
                 },
                 body: JSON.stringify({
-                    "id": inputId,
+                    "id": inputId.value,
                     "amount": amountPay.value
                 })
             });
