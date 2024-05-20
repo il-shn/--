@@ -6,7 +6,6 @@ window.onload = async function () {
     let urlPostGetServiceRequest = herokuLink + '/service/getService/credit';
     let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency';
     let urlServicePayCreditRequest = herokuLink + '/service/pay/credit';
-    
     let urlWithdrawCreditRequest = herokuLink + '/service/withdraw/credit/';
     let urlShowCreditsRequest = herokuLink + '/service/showActiveService/credit';
     

@@ -1,6 +1,9 @@
 window.onload = function () {
-    let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency';
-    let urlPostCardTransferRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/cardTransfer';
+    let herokuLink = 'https://moneyguard-fc72823844dd.herokuapp.com'    
+    // let herokuLink = ''
+
+    let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency';
+    let urlPostCardTransferRequest = herokuLink + '/moneyTransfer/cardTransfer';
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 

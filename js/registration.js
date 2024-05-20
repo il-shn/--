@@ -47,7 +47,6 @@ window.onload = function () {
         }
     }    
 
-    // Validation
     btn.addEventListener('click', function() {
         let errorMessage = '';   
 

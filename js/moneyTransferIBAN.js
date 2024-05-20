@@ -1,8 +1,9 @@
 window.onload =function(){
+    let herokuLink = 'https://moneyguard-fc72823844dd.herokuapp.com'    
+    // let herokuLink = ''
 
-    let urlGetMineCurrencyRequest = 'https://jsonplaceholder.typicode.com/moneyTransfer/getMineCurrency'
-    let urlPostIBANTransferRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/IBANTransfer'
-
+    let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency'
+    let urlPostIBANTransferRequest = herokuLink + '/moneyTransfer/IBANTransfer'
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
@@ -10,7 +11,6 @@ window.onload =function(){
     let transferAmount = document.querySelector('#transferAmount');
     let toIBAN = document.querySelector('#toIBAN');
     
-
     fetch(urlGetMineCurrencyRequest, {
         method: 'GET',
         headers: {
@@ -27,8 +27,6 @@ window.onload =function(){
         let currencyItems = response.data;
         if (currencyItems.length > 0) {
             currencyItems.forEach(item => {
-                console.log(currencyItems);
-                console.log(item);
                 let option = document.createElement('option');
                 option.textContent = item;
                 option.value = item;
@@ -40,7 +38,6 @@ window.onload =function(){
         alert('Помилка: ' + error.message);
     });
     
-
     document.getElementById('currencyForm').addEventListener('submit', function(e) {
         e.preventDefault()
           
@@ -55,15 +52,21 @@ window.onload =function(){
             "toIBAN": toIBAN.value,
             "transferAmount": transferAmount.value
         })
+    })  
+
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
     })
-            .then(response => {
-                console.log('Успішна відповідь:', response);
-                alert(response.message);
-            })
-            .catch(error => {
-                console.error('Помилка:', error);
-            });
-    });    
-
-
+    .then(response => {
+        console.log('Успішна відповідь:', response);
+        alert(response.message);
+    })
+    .catch(error => {
+        console.error('Помилка:', error);
+        alert('Помилка: ' + error.message);
+    });
+});
 }

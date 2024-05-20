@@ -1,7 +1,10 @@
 window.onload =function(){
 
-    let urlGetMineCurrencyRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/getMineCurrency'
-    let urlPostExchangeRequest = 'https://moneyguard-fc72823844dd.herokuapp.com/moneyTransfer/currencyExchange'
+    let herokuLink = 'https://moneyguard-fc72823844dd.herokuapp.com'    
+    // let herokuLink = ''
+
+    let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency'
+    let urlPostExchangeRequest = herokuLink + '/moneyTransfer/currencyExchange'
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
 
@@ -71,6 +74,7 @@ window.onload =function(){
             .then(response => {
                 console.log('Успішна відповідь:', response);
                 alert(response.message);
+                window.location.href = '/main/currencyExchange';
             })
             .catch(error => {
                 console.error('Помилка:', error);
