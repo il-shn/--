@@ -9,8 +9,8 @@ window.onload = function(){
     let urlProfileRequest = herokuLink + '/main/api/profile'
     let urlReplenishmentRequest = herokuLink + '/main/api/cheatingAccountReplenishment'
     let urlExchangeRatesRequest = herokuLink + '/main/api/exchangeRates' 
-    let urlAccountsRequest = herokuLink + '/main/api/account/0'
-    let urlTransactionsRequest = herokuLink + '/main/api/transaction/0'
+    let urlAccountsRequest = herokuLink + '/main/api/account/'
+    let urlTransactionsRequest = herokuLink + '/main/api/transaction/'
 
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
@@ -147,35 +147,35 @@ window.onload = function(){
         
                     switch (profileDataResponse.data.titul) {
                         case "ADMIN":
-                            helmetImgSrc.src = '../helmet9.png'
+                            helmetImgSrc.src = '/images/helmet9.png'
                             break;
                         case "HERALD":
-                            helmetImgSrc.src = '../helmet1.png'
+                            helmetImgSrc.src = '/images/helmet1.png'
                             break;
                         case "GUARDIAN":
-                            helmetImgSrc.src = '../helmet2.png'
+                            helmetImgSrc.src = '/images/helmet2.png'
                             break;
                         case "CRUSADER":
-                            helmetImgSrc.src = '../helmet3.png'
+                            helmetImgSrc.src = '/images/helmet3.png'
                             break;
                         case "ARCHON":
-                            helmetImgSrc.src = '../helmet4.png'
+                            helmetImgSrc.src = '/images/helmet4.png'
                             break;
                         case "LEGEND":
-                            helmetImgSrc.src = '../helmet5.png'
+                            helmetImgSrc.src = '/images/helmet5.png'
                             break;
                         case "ANCIENT":
-                            helmetImgSrc.src = '../helmet6.jpg'
+                            helmetImgSrc.src = '/images/helmet6.png'
                             break;
                         case "DIVINE":
-                            helmetImgSrc.src = '../helmet7.jpg'
+                            helmetImgSrc.src = '/images/helmet7.png'
                             break;
                         case "IMMORTAL":
-                            helmetImgSrc.src = '../helmet8.jpg'
+                            helmetImgSrc.src = '/images/helmet8.png'
                             break;
                             
                             default:
-                            helmetImgSrc.src = '../helmet10.jpg'
+                            helmetImgSrc.src = '/images/helmet10.png'
                             break;
                     }
                 }
@@ -296,151 +296,159 @@ window.onload = function(){
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });    
-    
-
-
+        
 
     // Пагінація аккаунтів
 
-    loadPages();
-    loadData(0);
-    
-    
-    function loadPages() {
-        fetch(urlAccountsRequest)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(response => {
-                const pageCounts = response.data.totalPages;
-                const pageContainer = document.getElementById('pages');
-            
-                for (let i = 0; i < pageCounts; i++) {
-                    const pageLink = document.createElement('a');
-                    pageLink.classList.add('page-link');
-                    pageLink.id = i;
-                    pageLink.textContent = 'Page ' + (i + 1);
-            
-                    const listItem = document.createElement('li');
-                    listItem.classList.add('page-item');
-                    listItem.appendChild(pageLink);
-            
-                    pageContainer.appendChild(listItem);
-                }
-                document.getElementById('pages').addEventListener('click', function(event) {
-                    if (event.target.classList.contains('page-link')) {
-                        loadData(event.target.id);
+        loadPages();
+
+        function loadPages() {
+            fetch(urlAccountsRequest + '0')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
                     }
-                });
-            })
-            .catch(error => {
-                console.error('Failed to load pages:', error);
-            });
-    
-    }
-    
-    function loadData(page) {
-        const dataContainer = document.getElementById('data');
-        dataContainer.innerHTML = '';
-    
-        fetch(urlAccountsRequest)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(response => {
-                response.data.content.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td class="card-title">${item.cardIds[0].cardNumber}</td>
-                        <td class="card-text">${item.cardIds[0].ownerName}</td>
-                        <td class="card-text">${item.amountOfMoney}</td>
-                        <td class="card-text">${item.currencyName}</td>
-                    `;
-                    dataContainer.appendChild(row);
-                        });
-            })
-            .catch(error => {
-                console.error('Failed to load data:', error);
-            });
-    }
+                    return response.json();
+                })
+                .then(response => {
+                    const pageCounts = response.data.totalPages;
+                    const pageContainer = document.getElementById('pages');
 
+                    for (let i = 0; i < pageCounts; i++) {
+                        const pageLink = document.createElement('a');
+                        pageLink.classList.add('page-link');
+                        pageLink.setAttribute('data-page', i);
+                        pageLink.textContent = 'Page ' + (i + 1);
 
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('page-item');
+                        listItem.appendChild(pageLink);
 
-    //ПАгінація транзакцій
-
-    loadPagesTr();
-    loadDataTr(0);
-    
-    
-    function loadPagesTr() {
-        fetch(urlTransactionsRequest)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(responseTransaction => {
-                const pageCount = responseTransaction.data.totalPages;
-                const pagesContainer = document.getElementById('pagination');
-    
-                for (let i = 0; i < pageCount; i++) {
-                    const pageLink = document.createElement('a');
-                    pageLink.classList.add('page-link');
-                    pageLink.id = i;
-                    pageLink.textContent = 'Page ' + (i + 1);
-    
-                    const listItem = document.createElement('li');
-                    listItem.classList.add('page-item');
-                    listItem.appendChild(pageLink);
-    
-                    pagesContainer.appendChild(listItem);
-                }
-                document.getElementById('pagination').addEventListener('click', function(event) {
-                    if (event.target.classList.contains('page-link')) {
-                        loadData(event.target.id);
+                        pageContainer.appendChild(listItem);
                     }
+
+                    pageContainer.addEventListener('click', function(event) {
+                        if (event.target.classList.contains('page-link')) {
+                            const page = parseInt(event.target.getAttribute('data-page'));
+                            loadData(page);
+
+                            document.querySelectorAll('.page-link').forEach(link => link.classList.remove('active'));
+                            event.target.classList.add('active');
+                        }
+                    });
+
+                    loadData(0);
+                    pageContainer.querySelector('a[data-page="0"]').classList.add('active');
+                })
+                .catch(error => {
+                    console.error('Failed to load pages:', error);
                 });
-            })
-            .catch(error => {
-                console.error('Failed to load pages:', error);
-            });
-    
-    }
-    
-    function loadDataTr(page) {
-        const dataContainer = document.getElementById('accountList');
-        dataContainer.innerHTML = ''; 
-    
-        fetch(urlTransactionsRequest)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(responseTransaction => {
-            responseTransaction.data.content.forEach(transaction => {
-                const listItem = document.createElement('li');
-                listItem.classList.add('list-group-item');
-                listItem.innerHTML = `
-                    <p>Date/Time: ${transaction.dateTimeOfTransaction}</p>
-                    <p>Name: ${transaction.nameOfTransaction}</p>
-                    <p>From: ${transaction.fromCardNumber}</p>
-                    <p>To: ${transaction.toCardNumber}</p>
-                    <p>Amount: ${transaction.howMuch}</p>
-                `;
-                dataContainer.appendChild(listItem);
-            });
-        })
-        .catch(error => {
-            console.error('Failed to load data:', error);
-        });
-    }
+        }
+
+        function loadData(page) {
+            const dataContainer = document.querySelector('#data tbody');
+            dataContainer.innerHTML = '';
+
+            fetch(urlAccountsRequest + page)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(response => {
+                    response.data.content.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="card-title">${item.cardIds[0].cardNumber}</td>
+                            <td class="card-text">${item.cardIds[0].ownerName}</td>
+                            <td class="card-text">${item.amountOfMoney}</td>
+                            <td class="card-text">${item.currencyName}</td>
+                        `;
+                        dataContainer.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Failed to load data:', error);
+                });
+        }
+
+        //ПАгінація транзакцій
+
+
+        loadTransactionPages();
+
+        function loadTransactionPages() {
+            fetch(urlTransactionsRequest + '0')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(response => {
+                    const pageCounts = response.data.totalPages;
+                    const pageContainer = document.getElementById('transactionPages');
+
+                    for (let i = 0; i < pageCounts; i++) {
+                        const pageLink = document.createElement('a');
+                        pageLink.classList.add('page-link');
+                        pageLink.setAttribute('data-page', i);
+                        pageLink.textContent = 'Page ' + (i + 1);
+
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('page-item');
+                        listItem.appendChild(pageLink);
+
+                        pageContainer.appendChild(listItem);
+                    }
+
+                    pageContainer.addEventListener('click', function(event) {
+                        if (event.target.classList.contains('page-link')) {
+                            const page = parseInt(event.target.getAttribute('data-page'));
+                            loadTransactionData(page);
+
+                            // Update active link
+                            document.querySelectorAll('.page-link').forEach(link => link.classList.remove('active'));
+                            event.target.classList.add('active');
+                        }
+                    });
+
+                    // Load the first page by default
+                    loadTransactionData(0);
+                    // Set the first page link as active
+                    pageContainer.querySelector('a[data-page="0"]').classList.add('active');
+                })
+                .catch(error => {
+                    console.error('Failed to load pages:', error);
+                });
+        }
+
+        function loadTransactionData(page) {
+            const dataContainer = document.querySelector('#transactionData tbody');
+            dataContainer.innerHTML = '';
+
+            fetch(urlTransactionsRequest + page)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(response => {
+                    response.data.content.forEach(item => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${item.dateTimeOfTransaction}</td>
+                        <td>${item.nameOfTransaction}</td>
+                        <td>${item.toCardNumber}</td>
+                        <td>${item.howMuch}</td>
+                        `;
+                        dataContainer.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Failed to load data:', error);
+                });
+        }
 }

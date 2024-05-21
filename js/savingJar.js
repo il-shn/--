@@ -17,7 +17,7 @@ window.onload = async function () {
     let amountCred = document.querySelector('#amountCred');
     let selectServiceWithdraw = document.querySelector('#selectServiceWithdraw');
     const dataContainer = document.getElementById('activeService');
-    let inputId = document.getElementById('inputId');
+    let inputId = document.querySelector('#inputId');
 
     try {
         const response = await fetch(urlGetVariantSavingJarRequest, {
@@ -185,7 +185,7 @@ window.onload = async function () {
             const result = await response.json();
             console.log('Успішна відповідь:', result);
             alert(result.message);
-            window.location.href = '/main/savingsJar';
+            // window.location.href = '/main/savingsJar';
         } catch (error) {
             console.error('Помилка:', error);
             alert('Помилка: ' + error.message);

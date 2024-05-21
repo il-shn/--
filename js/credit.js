@@ -16,7 +16,6 @@ window.onload = async function () {
     let amountCred = document.querySelector('#amountCred');
     const dataContainer = document.getElementById('activeService');
     let selectServicePay = document.querySelector('#selectServicePay');
-    let selectServiceWithdraw = document.querySelector('#selectServiceWithdraw');
 
     try {
         const response = await fetch(urlGetVariantCreditRequest, {
@@ -152,13 +151,9 @@ window.onload = async function () {
 
             data.forEach(item => {
                 let option = document.createElement('option');
-                let option2 = document.createElement('option');
                 option.textContent = item.serviceId;
-                option2.textContent = item.serviceId;
                 option.value = item.serviceId;
-                option2.value = item.serviceId;
                 selectServicePay.appendChild(option);    
-                selectServiceWithdraw.appendChild(option2);    
             })
         }
 

@@ -58,7 +58,7 @@ main{
 
 }
 .currencyMainBlock{
-    color: white;
+    color: rgb(102, 102, 102);
     border: #f4f4f4 solid 1px;
     /* background: white; */
     display: flex;
@@ -98,9 +98,15 @@ section:last-of-type{
     margin-bottom: 10%;
 }
 
-.helmetImg{
-    width: 150px;
-    margin-top: 75px;
+.imgDiv{
+
+    object-fit: cover
+    /* border-radius: 50% 0% 0% 50%; */
+    /* background-color: rgba(255, 255, 255, 0.505); */
+    /* margin-top: 75px; */
+}
+#helmetImg{
+    height: 50px;
 }
 
 #slidebarImg{
