@@ -360,7 +360,6 @@ window.onload = function(){
             console.log('Успішна відповідь:', result);
             let replanish = document.querySelector('#replenishBox')
             replanish.innerHTML = `<h6>${result.message}</h6>`
-            window.location.href = '/main/';
         } catch (error) {
             console.error('Помилка:', error);
             let replanish = document.querySelector('#replenishBox')

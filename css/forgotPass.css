@@ -1,12 +1,15 @@
 body {
-    font-family: fantasy;
-    background-color: #ffecd4;
+    font-family: 'Gill Sans';;
+    background: linear-gradient(45deg, rgb(77, 66, 48), #ffecd4);
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    font-weight: 300;
+    color: #6e6e6e;
+
 }
 
 .reset-password-container {
@@ -20,7 +23,8 @@ body {
 }
 
 .reset-password-container h2 {
-    color: #333;
+    font-weight: 300;
+    color: #6e6e6e;
     text-align: center;
 }
 
@@ -35,7 +39,7 @@ body {
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-family: fantasy;
+    font-family: 'Gill Sans';;
 
 }
 
@@ -48,7 +52,7 @@ body {
     margin-top: 10px;
     cursor: pointer;
     border-radius: 4px;
-    font-family: fantasy;
+    font-family: 'Gill Sans';;
     font-size: 16px;
 
 }

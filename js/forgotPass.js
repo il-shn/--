@@ -32,6 +32,7 @@ window.onload = function(){
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': csrfToken
             },
             body: JSON.stringify({
                 "email": email.value
@@ -47,7 +48,7 @@ window.onload = function(){
             if (response.success) {
                 console.log('Success:', response.message);
                 alert(response.message);
-                // window.location.href = '/login';
+                window.location.href = '/login';
             } else {
                 throw new Error(response.message);
             }
