@@ -255,13 +255,15 @@ window.onload = function(){
 
     let replenishSelect = document.querySelector('#replenishSelect');
     let myCurrency = document.querySelector('#myCurrency');
-    let elements = document.querySelectorAll('.myCurrencyOption')
+    let elements = document.getElementsByClassName('myCurrencyOption')
     if (elements.length > 0) {
-        elements.forEach(function(element) {
-            element.remove();
-        });
-        
-    }
+        var elementsArray = Array.from(elements);
+    
+        elementsArray.forEach(function(element) {
+            element.parentNode.removeChild(element);
+        });    } else {
+        console.log("Елементи з класом 'назва_класу' не знайдені.");
+    }    console.log(elements);
     sendGetRequest('GET', urlGetMineCurrencyRequest)
     .then(response => {
         let currencyItems = response.data;
