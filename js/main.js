@@ -200,9 +200,10 @@ window.onload = function(){
     //  ================================
 
     //Card info
+    uahFirstly()
+    
+    function uahFirstly(params) {
 
-    let listItems = document.querySelectorAll('#myCurrency li a');
-    let spanCurr = document.querySelector('#spanCurr');
     let mainSum = document.querySelector('#sum');
     let cardNumber = document.querySelector('#cardNumber');
     let cvv = document.querySelector('#cvv');
@@ -240,9 +241,17 @@ window.onload = function(){
     .catch(error => {
         alert('Помилка: ' + error.message);
     });    
-
+    }
 
     function addClickEventToListItems() {
+        let listItems = document.querySelectorAll('#myCurrency li a');
+        let spanCurr = document.querySelector('#spanCurr');
+        let mainSum = document.querySelector('#sum');
+        let cardNumber = document.querySelector('#cardNumber');
+        let cvv = document.querySelector('#cvv');
+        let dateExpire = document.querySelector('#dateExpire');
+        let name = document.querySelector('#name');
+    
 
         listItems.forEach(a => {
             a.addEventListener('click', function(event) {
