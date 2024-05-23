@@ -8,106 +8,98 @@
     <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
-      <main>
-        <div class="sideBar">
-            <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-light" style="width: 280px; height: 100%; min-height: 660px;">
-                <a href="#" class="d-flex justify-content-around mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                <span class="fs-4">MoneyGuard</span>
-                <img src="/images/profil.png" alt="" id="slidebarImg">
+      <div class="mainBlock">
+        <div class="sideBar d-flex flex-column flex-shrink-0 p-3 text-bg-light">
+            <a href="#" class="d-flex justify-content-around mb-3 mb-md-0 me-md-auto text-secondary text-decoration-none">
+              <span class="brandName fs-4">MoneyGuard</span>
+              <img src="/images/profil.png" alt="" id="slidebarImg">
             </a>
             <hr>
             <div class="list-group list-group-flush">
-              <a href="/moneyTransfer/getMineCurrency" class="list-group-item list-group-item-action">Mine Currencies</a>
-              <a href="/main/moneyTransfer/card" class="list-group-item list-group-item-action">Money Card Transfers</a>
-              <a href="/main/moneyTransfer/IBAN" class="list-group-item list-group-item-action">Money IBAN Transfers</a>
+              <a href="/main/" class="list-group-item  list-group-item-action">
+                <i class="fa-brands fa-fort-awesome"></i>Main</a>
+              <a href="/main/moneyTransfer/card" class="list-group-item list-group-item-action">
+                <i class="fa-regular fa-credit-card"></i>Card Transfers</a>
+              <a href="/main/moneyTransfer/IBAN" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-receipt"></i>IBAN Transfers</a>
               <a href="/main/credit
-              " class="list-group-item list-group-item-action">Credit</a>
-              <a href="/main/deposit" class="list-group-item list-group-item-action">Deposit</a>
-              <a href="/main/savingsJar" class="list-group-item list-group-item-action">Saving Jar</a>
-              <a href="/main/currencyExchange" class="list-group-item list-group-item-action">Exchange</a>
-            </div>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>                  
-            <hr>
-            <div class="dropdown">
-              <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle show" data-bs-toggle="dropdown" aria-expanded="true">
-                    <img src="/images/helmet3.png" alt="" width="32" height="32" class="rourounded-circle me-2">
-                    <strong>Elijah Rope</strong>
-                </a>
-                </div>
-            </div>
-            </div>
-            
-            <div class="mainBlock">
-            <div class="wrapper">
-
-                    <section class="sectionBox">
-                    <div class="container">
-                        <form action="
-                        " method="" id="currencyForm">
-
-                            <h1 class="fw-lighter">Credit</h1>
-                            <h7 class="fw-light text-body-secondary"></h7>
-                            <div class="d-flex flex-row justify-content-between">
-                                <div id="block1" class="data-block"></div>
-                                <div id="block2" class="data-block"></div>
-                                <div id="block3" class="data-block"></div>
-                            </div>
-
-                            <h7 class="fw-light text-body-secondary">
-                                Select Credit plan
-                            </h7>
-                            <select class="form-select selectCustom currencyList" size="1" aria-label="Size 3 select example" id="selectPlan" action="">
-                            </select>
-                            
-                            <h7 class="fw-light text-body-secondary">
-                                Select currency
-                            </h7>
-                            <select class="form-select selectCustom currencyList" size="1" aria-label="Size  select example" id="selectCurr" action="">
-                            </select>
-
-                            <div class="input-group mb-3">
-                                <input type="number" class="form-control" placeholder="" step="0.01" aria-label="Recipient's username" id="amountCred" aria-describedby="basic-addon2" required>
-                                <span class="input-group-text fw-light text-body-secondary" id="basic-addon2"> Amount</span>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-secondary">Submit</button>
-                        </form>
-                    </div>
-                </section>
-                
-                <section class="section">
-                    <div class="">
-                        <h1 class="fw-lighter p-4">Active Services</h1>
-                        <ul id="activeService" class=""></ul>
-                    </div>
-                </section>
-                
-                <section class="sectionBox">
-                        <form id="payForm">
-                            <h1 class="fw-lighter p-4">Pay Services</h1>
-                            <h7 class="fw-light text-body-secondary">
-                                Select active credit
-                            </h7>
-                            <select class="form-select selectCustom currencyList" size="1" aria-label="Size  select example" id="selectServicePay" placeholder="" action="">
-                            </select>
-
-                            <div class="input-group mb-3"> 
-                                <input type="number" class="form-control" placeholder="" step="0.01" aria-label="Recipient's username" id="amountPay" aria-describedby="basic-addon2" required>
-                                <span class="input-group-text fw-light text-body-secondary" id="basic-addon3"> Amount</span>
-                            </div>
-                            <button type="submit" id="btnPayService" class="btn btn-secondary">Submit</button>
-                        </form>
-                </section>
-                    
+              " class="list-group-item list-group-item-action">
+              <i class="fa-solid fa-coins"></i>Credit</a>
+              <a href="/main/deposit" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-sack-dollar"></i>Deposit</a>
+              <a href="/main/savingJar" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-shield-halved"></i>Saving Jar</a>
+              <a href="/main/currencyExchange" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-money-bill-transfer"></i>Exchange</a>
             </div>
         </div>
-        </main>
-    <script src="/js/credit.js"></script>
+            <main>
+                <div class="wrapper">
+    
+                        <section class="sectionBox">
+                        <div class="containeR">
+                            <form action="
+                            " method="" id="currencyForm">
+    
+                                <h1 class="fw-lighter">Credit</h1>
+                                <h7 class="fw-light text-body-secondary"></h7>
+                                <div class="d-flex flex-row justify-content-between">
+                                    <div id="block1" class="data-block"></div>
+                                    <div id="block2" class="data-block"></div>
+                                    <div id="block3" class="data-block"></div>
+                                </div>
+    
+                                <h7 class="fw-light text-body-secondary">
+                                    Select Credit plan
+                                </h7>
+                                <select class="form-select selectCustom currencyList" size="1" aria-label="Size 3 select example" id="selectPlan" action="">
+                                </select>
+                                
+                                <h7 class="fw-light text-body-secondary">
+                                    Select currency
+                                </h7>
+                                <select class="form-select selectCustom currencyList" size="1" aria-label="Size  select example" id="selectCurr" action="">
+                                </select>
+    
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" placeholder="" step="0.01" aria-label="Recipient's username" id="amountCred" aria-describedby="basic-addon2" required>
+                                    <span class="input-group-text fw-light text-body-secondary" id="basic-addon2"> Amount</span>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-secondary">Submit</button>
+                            </form>
+                        </div>
+                    </section>
+                    
+                    <section class="section">
+                        <div class="">
+                            <h1 class="fw-lighter p-4">Active Services</h1>
+                            <ul id="activeService" class=""></ul>
+                        </div>
+                    </section>
+                    
+                    <section class="sectionBox">
+                            <form id="payForm">
+                                <h1 class="fw-lighter p-4">Pay Services</h1>
+                                <h7 class="fw-light text-body-secondary">
+                                    Select active credit
+                                </h7>
+                                <select class="form-select selectCustom currencyList" size="1" aria-label="Size  select example" id="selectServicePay" placeholder="" action="">
+                                </select>
+    
+                                <div class="input-group mb-3"> 
+                                    <input type="number" class="form-control" placeholder="" step="0.01" aria-label="Recipient's username" id="amountPay" aria-describedby="basic-addon2" required>
+                                    <span class="input-group-text fw-light text-body-secondary" id="basic-addon3"> Amount</span>
+                                </div>
+                                <button type="submit" id="btnPayService" class="btn btn-secondary">Submit</button>
+                            </form>
+                    </section>
+                        
+                </div>
+            </main>
+    
+        </div>
+        <script src="https://kit.fontawesome.com/fc97c7b5f6.js" crossorigin="anonymous"></script>
+        <script src="/js/credit.js"></script>
     </body>
 </html>

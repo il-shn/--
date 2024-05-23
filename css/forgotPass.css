@@ -68,3 +68,19 @@ form a:hover {
 #text{
     text-align: left;
 }
+
+@media (max-width: 800px) {
+    .reset-password-container{
+        width: 545px;
+        font-size: 20px;
+
+    }
+
+ }
+
+@media (max-width: 480px) {
+    .reset-password-container{
+        width: 100vh;
+        font-size: 25px;
+    }
+ }

@@ -9,25 +9,13 @@ body {
     align-items: center;
 }
 
-/* .left-img{
-    width: 100px;
-    position: relative;
-    right: 200px;
-    bottom: 200px;
-}
-.right-img{
-    width: 120px;
-    position: relative;
-    left: 220px;
-    top: 200px;
-} */
 .login-container {
     background: white;
     padding: 40px;
     border: solid 1px rgb(194, 194, 194);
     border-radius: 8px;
-    /* box-shadow: 0 4px 8px rgba(0,0,0,0.1); */
     width: 300px;
+    position: relative;
 }
 
 h2 {
@@ -71,7 +59,7 @@ h2 {
 
 .links {
     margin-top: 20px;
-    text-align: center;
+    text-align: right;
 }
 
 .links a {
@@ -80,13 +68,20 @@ h2 {
     text-decoration: none;
 }
 
+
 .links a:hover {
     text-decoration: underline;
+}
+#signIn{
+    position: absolute;
+    left: 20%;
+    z-index: 20;
 }
 
 #helmet_left{
     width: 70px;
     position: relative;
+    z-index: 5;
     top: 80px;
     left: 300px;
 }
@@ -97,5 +92,22 @@ h2 {
     right: 20px;
     bottom: 60px;
     rotate: 10%;
+    z-index: 5;
+
 }
+@media (max-width: 800px) {
+    .login-container{
+        width: 545px;
+        font-size: 20px;
+
+    }
+
+ }
+
+@media (max-width: 480px) {
+    .login-container{
+        width: 100vh;
+        font-size: 25px;
+    }
+ }
 

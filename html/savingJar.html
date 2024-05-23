@@ -8,48 +8,33 @@
     <link rel="stylesheet" href="../css/main.css">
   </head>
   <body>
-      <main>
-        <div class="sideBar">
-            <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-light" style="width: 280px; height: 100%; min-height: 660px;">
-                <a href="#" class="d-flex justify-content-around mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-                    <span class="fs-4">MoneyGuard</span>
-                    <img src="/images/profil.png" alt="" id="slidebarImg">
-                </a>
-                <hr>
-                <div class="list-group list-group-flush">
-                    <a href="/main/moneyTransfer/card
-                    " class="list-group-item list-group-item-action">Money Card Transfers</a>
-
-                    <a href="/main/moneyTransfer/IBAN" class="list-group-item list-group-item-action">Money IBAN Transfers</a>
-
-                    <a href="/main
-                    " class="list-group-item list-group-item-action">Credit</a>
-
-                    <a href="/main/deposit
-                    " class="list-group-item list-group-item-action">Deposit</a>
-
-                    <a href="/main/savingsJar" class="list-group-item list-group-item-action">Saving Jar</a>
-
-                    <a href="/main/currencyExchange" class="list-group-item list-group-item-action">Exchange</a>
-                  </div>
-                    <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-                </ul>                  
-                <hr>
-                <div class="dropdown">
-                <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle show" data-bs-toggle="dropdown" aria-expanded="true">
-                    <img src="/images/helmet3.png" alt="" width="32" height="32" class="rourounded-circle me-2">
-                    <strong>Elijah Rope</strong>
-                </a>
-                </div>
+      <div class="mainBlock">
+        <div class="sideBar d-flex flex-column flex-shrink-0 p-3 text-bg-light">
+            <a href="#" class="d-flex justify-content-around mb-3 mb-md-0 me-md-auto text-secondary text-decoration-none">
+              <span class="brandName fs-4">MoneyGuard</span>
+              <img src="/images/profil.png" alt="" id="slidebarImg">
+            </a>
+            <hr>
+            <div class="list-group list-group-flush">
+              <a href="/main/" class="list-group-item  list-group-item-action">
+                <i class="fa-brands fa-fort-awesome"></i>Main</a>
+              <a href="/main/moneyTransfer/card" class="list-group-item list-group-item-action">
+                <i class="fa-regular fa-credit-card"></i>Card Transfers</a>
+              <a href="/main/moneyTransfer/IBAN" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-receipt"></i>IBAN Transfers</a>
+              <a href="/main/credit
+              " class="list-group-item list-group-item-action">
+              <i class="fa-solid fa-coins"></i>Credit</a>
+              <a href="/main/deposit" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-sack-dollar"></i>Deposit</a>
+              <a href="/main/savingJar" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-shield-halved"></i>Saving Jar</a>
+              <a href="/main/currencyExchange" class="list-group-item list-group-item-action">
+                <i class="fa-solid fa-money-bill-transfer"></i>Exchange</a>
             </div>
-            </div>
+        </div>
             
-            <div class="mainBlock">
+            <main>
             <div class="wrapper">
 
                     <section class="sectionBox">
@@ -99,7 +84,7 @@
                             <h7 class="fw-light text-body-secondary">
                             </h7>
                             <div class="input-group mb-3"> 
-                                <input type="number" class="form-control" placeholder="" step="1" aria-label="Recipient's username" id="inputID" aria-describedby="basic-addon2" required>
+                                <input type="number" class="form-control" placeholder="" step="1" aria-label="Recipient's username" id="inputId" aria-describedby="basic-addon2" required>
                                 <span class="input-group-text fw-light text-body-secondary">Jar ID</span>
                             </div>
                             <div class="input-group mb-3"> 
@@ -126,8 +111,9 @@
                 </section>
 
                 </div>
-                </div>
-        <script src="/js/savingJar.js"></script>
-        </main>
+                </main>
+                <script src="https://kit.fontawesome.com/fc97c7b5f6.js" crossorigin="anonymous"></script>
+                <script src="/js/savingJar.js"></script>
+        </div>
     </body>
 </html>

@@ -185,7 +185,7 @@ window.onload = async function () {
             const result = await response.json();
             console.log('Успішна відповідь:', result);
             alert(result.message);
-            // window.location.href = '/main/savingsJar';
+            window.location.href = '/main/savingsJar';
         } catch (error) {
             console.error('Помилка:', error);
             alert('Помилка: ' + error.message);

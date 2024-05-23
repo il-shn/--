@@ -11,6 +11,7 @@ window.onload = function(){
     let urlExchangeRatesRequest = herokuLink + '/main/api/exchangeRates' 
     let urlAccountsRequest = herokuLink + '/main/api/account/'
     let urlTransactionsRequest = herokuLink + '/main/api/transaction/'
+    let urlPostCurr = herokuLink + '/main/api/cardData'
 
 
     const csrfToken = document.cookie.replace(/(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/, '$1');
@@ -91,111 +92,176 @@ window.onload = function(){
         sendPostRequest('POST', urlCreateAccountRequest, {
             "currencyName": currencyList.value })
             .then(response => {
-                console.log('Успішна відповідь:', response);
-                alert(`Account with ${currencyList.value} currency has created successfully`);
-                window.location.href = '/main';
+                console.log(response);
+                alert(response.message);
+                getMineCurrencies()
             })
             .catch(error => {
-                console.error('Помилка:', error);
-                alert('Account with this currency has been created')
-            });
-    });    
+                alert('Помилка: ' + error.message);
+            });    
+        });    
 
     // ================================
-
-
+        
     // Get Profile data
 
-    fetch(urlProfileRequest, {
-        method: 'GET',
-        headers: {
-            'X-XSRF-TOKEN': csrfToken
-        }
-    })
-    
-        .then(response=>{
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+    function getProfileData(){
+
+        fetch(urlProfileRequest, {
+            method: 'GET',
+            headers: {
+                'X-XSRF-TOKEN': csrfToken
             }
-            return response.json()
         })
-        .then(profileDataResponse => {
-            if (profileDataResponse.success = true) {
-                console.log(profileDataResponse);
-
-                let profileList = document.querySelector('#profileList');
         
-            const profileCard = `
-                <div>
-                    <h2>Profile info</h2>
-                    <p class="fw-lighter"><strong>IBAN:</strong> ${profileDataResponse.data.iban}</h5>
-                    <p class="fw-lighter"><strong>First name:</strong> ${profileDataResponse.data.firstName}</p>
-                    <p class="fw-lighter"><strong>Last Name:</strong> ${profileDataResponse.data.secondName}</p>
-                    <p class="fw-lighter"><strong>Date of birth:</strong> ${profileDataResponse.data.dateOfBirth}</p>
-                    <p class="fw-lighter"><strong>Phone number:</strong> ${profileDataResponse.data.phoneNumber}</p>
-                    <p class="fw-lighter"><strong>Email:</strong> ${profileDataResponse.data.email}</p>
-                    <p class="fw-lighter"><strong>Cashback:</strong> ${profileDataResponse.data.cashBackInUSD}</p>
-                    <p class="fw-lighter"><strong>Titul name:</strong> ${profileDataResponse.data.titul}</p>
-                    <p class="fw-lighter"><strong>Limit for service:</strong> ${profileDataResponse.data.limitForService}</p>
-                    <p class="fw-lighter"><strong>IBAN:</strong> ${profileDataResponse.data.iban}</p>
-                    </div>
-                    `;   
-            profileList.innerHTML = profileCard;  
-
-                function titulImg(params) {
-                    let helmetImgSrc = document.querySelector('#helmetImg');
-        
-                    switch (profileDataResponse.data.titul) {
-                        case "ADMIN":
-                            helmetImgSrc.src = '/images/helmet9.png'
-                            break;
-                        case "HERALD":
-                            helmetImgSrc.src = '/images/helmet1.png'
-                            break;
-                        case "GUARDIAN":
-                            helmetImgSrc.src = '/images/helmet2.png'
-                            break;
-                        case "CRUSADER":
-                            helmetImgSrc.src = '/images/helmet3.png'
-                            break;
-                        case "ARCHON":
-                            helmetImgSrc.src = '/images/helmet4.png'
-                            break;
-                        case "LEGEND":
-                            helmetImgSrc.src = '/images/helmet5.png'
-                            break;
-                        case "ANCIENT":
-                            helmetImgSrc.src = '/images/helmet6.png'
-                            break;
-                        case "DIVINE":
-                            helmetImgSrc.src = '/images/helmet7.png'
-                            break;
-                        case "IMMORTAL":
-                            helmetImgSrc.src = '/images/helmet8.png'
-                            break;
-                            
-                            default:
-                            helmetImgSrc.src = '/images/helmet10.png'
-                            break;
-                    }
+            .then(response=>{
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-                titulImg()  
+                return response.json()
+            })
+            .then(response => {
+                if (response.success == true) {
+                    let profileList = document.querySelector('#profileList');
             
-            } else {
-                alert(JSON.stringify(profileDataResponse.message)); 
+                const profileCard = `
+                    <div>
+                        <h2>Profile info</h2>
+                        <p class="fw-lighter"><strong>First name:</strong> ${response.data.firstName}</p>
+                        <p class="fw-lighter"><strong>Last Name:</strong> ${response.data.secondName}</p>
+                        <p class="fw-lighter"><strong>Date of birth:</strong> ${response.data.dateOfBirth}</p>
+                        <p class="fw-lighter"><strong>Phone number:</strong> ${response.data.phoneNumber}</p>
+                        <p class="fw-lighter"><strong>Email:</strong> ${response.data.email}</p>
+                        <p class="fw-lighter"><strong>Cashback:</strong> ${response.data.cashBackInUSD}</p>
+                        <p class="fw-lighter"><strong>Titul name:</strong> ${response.data.titul}</p>
+                        <p class="fw-lighter"><strong>Limit for service:</strong> ${response.data.limitForService}</p>
+                        <p class="fw-lighter"><strong>IBAN:</strong> ${response.data.iban}</p>
+                        </div>
+                        `;   
+                profileList.innerHTML = profileCard;  
+                const adminBtn = document.querySelector('#adminBtn')
+                const drpDownMenu = document.querySelector('#drpDownMenu')
+                drpDownMenu.textContent = response.data.firstName
+                    
+                if (response.data.firstName === 'ADMIN') {
+                    adminBtn.classList.remove('disabled')
+                }
+                    function titulImg(params) {
+                        let helmetImgSrc = document.querySelector('#helmetImg');
+                        let helmetSidebar = document.querySelector('#helmetSidebar');
+            
+                        switch (response.data.titul) {
+                            case "ADMIN":
+                                helmetImgSrc.src = '/images/helmet9.png'
+                                break;
+                            case "HERALD":
+                                helmetImgSrc.src = '/images/helmet1.png'
+                                break;
+                            case "GUARDIAN":
+                                helmetImgSrc.src = '/images/helmet2.png'
+                                break;
+                            case "CRUSADER":
+                                helmetImgSrc.src = '/images/helmet3.png'
+                                break;
+                            case "ARCHON":
+                                helmetImgSrc.src = '/images/helmet4.png'
+                                break;
+                            case "LEGEND":
+                                helmetImgSrc.src = '/images/helmet5.png'
+                                break;
+                            case "ANCIENT":
+                                helmetImgSrc.src = '/images/helmet6.png'
+                                break;
+                            case "DIVINE":
+                                helmetImgSrc.src = '/images/helmet7.png'
+                                break;
+                            case "IMMORTAL":
+                                helmetImgSrc.src = '/images/helmet8.png'
+                                break;
+                                
+                                default:
+                                helmetImgSrc.src = '/images/helmet10.png'
+                                break;
+                        }
+                        helmetSidebar.src = helmetImgSrc.src
+                    }
+                    titulImg()  
+                
+                } else {
+                    alert(JSON.stringify(response.message)); 
 
-            }
-        })
-        .catch(err => console.log(err))
-    
+                }
+            })
+            .catch(err => console.log(err))
+    }
+    getProfileData()
 
 
     //  ================================
 
+    //Card info
 
-    // Replenishment
+    function addClickEventToListItems() {
+
+        let listItems = document.querySelectorAll('#myCurrency li a');
+        let spanCurr = document.querySelector('#spanCurr');
+        let mainSum = document.querySelector('#sum');
+        let cardNumber = document.querySelector('#cardNumber');
+        let cvv = document.querySelector('#cvv');
+        let dateExpire = document.querySelector('#dateExpire');
+        let name = document.querySelector('#name');
+        listItems.forEach(a => {
+            a.addEventListener('click', function(event) {
+                event.preventDefault(); 
+                spanCurr.textContent = a.textContent
+        fetch(urlPostCurr, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-XSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({
+                "currencyName": a.textContent
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Check your data');
+            }
+            return response.json();
+        })
+        .then(response => {
+            if (response.success) {
+                console.log('Success:', response.message);
+                mainSum.textContent = response.data.amountOfMoney
+                cardNumber.textContent = response.data.cardNumber
+                cvv.textContent = response.data.cvv
+                dateExpire.textContent = response.data.validity
+                name.textContent = response.data.ownerName                
+            } else {
+                throw new Error(response.message);
+            }
+        })
+        .catch(error => {
+            alert('Помилка: ' + error.message);
+        });    
+            });
+        });
+    }
+
+    // Get my currencies (Replenishment & Card Info)
+
+    function getMineCurrencies(){
 
     let replenishSelect = document.querySelector('#replenishSelect');
+    let myCurrency = document.querySelector('#myCurrency');
+    let elements = document.querySelectorAll('.myCurrencyOption')
+    if (elements.length > 0) {
+        elements.forEach(function(element) {
+            element.remove();
+        });
+        
+    }
     sendGetRequest('GET', urlGetMineCurrencyRequest)
     .then(response => {
         let currencyItems = response.data;
@@ -204,15 +270,26 @@ window.onload = function(){
                 let option = document.createElement('option');
                 option.textContent = item;
                 option.value = item;
+                option.classList.add('myCurrencyOption')
                 replenishSelect.appendChild(option);
+
+                let currencyLi = document.createElement('li');
+                let currencyA = document.createElement('a');
+                currencyLi.appendChild(currencyA);
+                myCurrency.appendChild(currencyLi);
+                currencyA.textContent = item
+                currencyA.href = '#';
+                currencyA.classList.add('dropdown-item');
             });
+            addClickEventToListItems()
         } else {
             console.log('No available currency');
             console.log(response);
         }
     })
     .catch(err => console.log(err))
-
+    }
+    getMineCurrencies()
 
     document.getElementById('replenishForm').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -242,7 +319,7 @@ window.onload = function(){
             console.log('Успішна відповідь:', result);
             let replanish = document.querySelector('#replenishBox')
             replanish.innerHTML = `<h6>${result.message}</h6>`
-
+            window.location.href = '/main/';
         } catch (error) {
             console.error('Помилка:', error);
             let replanish = document.querySelector('#replenishBox')
@@ -250,7 +327,7 @@ window.onload = function(){
             replanish.innerHTML = `<h6>${'Помилка: ' + error.message}</h6>`
         }
     });
-
+    
     // ================================
     
 

@@ -1,10 +1,8 @@
 body {
     font-family: fantasy;
-    background-color:  #ffecd4;
-    /* background-image: url('/1531132_4088.jpg'); */
+    background: linear-gradient(45deg, rgb(77, 66, 48), #ffecd4);
     background-attachment: fixed;
     background-size: cover;
-    /* background-repeat: repeat; */
     margin: 0;
     padding: 0;
     display: flex;
@@ -49,10 +47,6 @@ form input[type="button"] {
     cursor: default;
 }
 
-/* form input[type="button"]:hover {
-    background-color: #57432b;
-} */
-
 form a {
     color: #7a5e3c;
     text-decoration: none;
@@ -79,10 +73,6 @@ p{
     position: relative;
     top: 90px;
     right: 15px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    /* top: 10%;
-    left: 10%;
-    clip: rect(0px, 150px, 200px, 0px); */
 }
 
 #shield{
@@ -90,8 +80,27 @@ p{
     position: relative;
     bottom: 90px;
     left: 335px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    /* top: 10%;
-    left: 10%;
-    clip: rect(0px, 150px, 200px, 0px); */
 }
+
+@media (max-width: 800px) {
+    form{
+        width: 545px;
+        font-size: 20px;
+
+    }
+    .form-explain{
+        font-size: 17px;
+
+    }
+
+ }
+
+@media (max-width: 480px) {
+    form{
+        width: 100vh;
+        font-size: 25px;
+    }
+    .form-explain{
+        font-size: 14px;
+    }
+ }
