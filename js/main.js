@@ -94,7 +94,7 @@ window.onload = function(){
             .then(response => {
                 console.log(response);
                 alert(response.message);
-                getMineCurrencies()
+                getMyCurrencies()
             })
             .catch(error => {
                 alert('Помилка: ' + error.message);
@@ -201,15 +201,49 @@ window.onload = function(){
 
     //Card info
 
+    let listItems = document.querySelectorAll('#myCurrency li a');
+    let spanCurr = document.querySelector('#spanCurr');
+    let mainSum = document.querySelector('#sum');
+    let cardNumber = document.querySelector('#cardNumber');
+    let cvv = document.querySelector('#cvv');
+    let dateExpire = document.querySelector('#dateExpire');
+    let name = document.querySelector('#name');
+
+    fetch(urlPostCurr, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+            "currencyName": "UAH"
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Check your data');
+        }
+        return response.json();
+    })
+    .then(response => {
+        if (response.success) {
+            console.log('Success:', response.message);
+            mainSum.textContent = response.data.amountOfMoney
+            cardNumber.textContent = response.data.cardNumber
+            cvv.textContent = response.data.cvv
+            dateExpire.textContent = response.data.validity
+            name.textContent = response.data.ownerName                
+        } else {
+            throw new Error(response.message);
+        }
+    })
+    .catch(error => {
+        alert('Помилка: ' + error.message);
+    });    
+
+
     function addClickEventToListItems() {
 
-        let listItems = document.querySelectorAll('#myCurrency li a');
-        let spanCurr = document.querySelector('#spanCurr');
-        let mainSum = document.querySelector('#sum');
-        let cardNumber = document.querySelector('#cardNumber');
-        let cvv = document.querySelector('#cvv');
-        let dateExpire = document.querySelector('#dateExpire');
-        let name = document.querySelector('#name');
         listItems.forEach(a => {
             a.addEventListener('click', function(event) {
                 event.preventDefault(); 
@@ -251,47 +285,43 @@ window.onload = function(){
 
     // Get my currencies (Replenishment & Card Info)
 
-    function getMineCurrencies(){
-
-    let replenishSelect = document.querySelector('#replenishSelect');
-    let myCurrency = document.querySelector('#myCurrency');
-    let elements = document.getElementsByClassName('myCurrencyOption')
-    if (elements.length > 0) {
-        var elementsArray = Array.from(elements);
-    
-        elementsArray.forEach(function(element) {
-            element.parentNode.removeChild(element);
-        });    } else {
-        console.log("Елементи з класом 'назва_класу' не знайдені.");
-    }    console.log(elements);
-    sendGetRequest('GET', urlGetMineCurrencyRequest)
-    .then(response => {
-        let currencyItems = response.data;
-        if (currencyItems.length > 0) {
-            currencyItems.forEach(item => {
-                let option = document.createElement('option');
-                option.textContent = item;
-                option.value = item;
-                option.classList.add('myCurrencyOption')
-                replenishSelect.appendChild(option);
-
-                let currencyLi = document.createElement('li');
-                let currencyA = document.createElement('a');
-                currencyLi.appendChild(currencyA);
-                myCurrency.appendChild(currencyLi);
-                currencyA.textContent = item
-                currencyA.href = '#';
-                currencyA.classList.add('dropdown-item');
-            });
-            addClickEventToListItems()
-        } else {
-            console.log('No available currency');
-            console.log(response);
+    function getMyCurrencies(params) {
+        
+        let replenishSelect = document.querySelector('#replenishSelect');
+        let myCurrency = document.querySelector('#myCurrency');
+        while (myCurrency.childNodes.item(1)) {
+            myCurrency.removeChild(myCurrency.childNodes.item(1));
         }
-    })
-    .catch(err => console.log(err))
+        while (replenishSelect.childNodes.item(1)) {
+            replenishSelect.removeChild(replenishSelect.childNodes.item(1));
+        }
+        sendGetRequest('GET', urlGetMineCurrencyRequest)
+        .then(response => {
+            let currencyItems = response.data;
+            if (currencyItems.length > 0) {
+                currencyItems.forEach(item => {
+                    let option = document.createElement('option');
+                    option.textContent = item;
+                    option.value = item;
+                    replenishSelect.appendChild(option);
+
+                    let currencyLi = document.createElement('li');
+                    let currencyA = document.createElement('a');
+                    currencyLi.appendChild(currencyA);
+                    myCurrency.appendChild(currencyLi);
+                    currencyA.textContent = item
+                    currencyA.href = '#';
+                    currencyA.classList.add('dropdown-item');
+                });
+                addClickEventToListItems()
+            } else {
+                console.log('No available currency');
+                console.log(response);
+            }
+        })
+        .catch(err => console.log(err))
     }
-    getMineCurrencies()
+    getMyCurrencies()
 
     document.getElementById('replenishForm').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -329,7 +359,7 @@ window.onload = function(){
             replanish.innerHTML = `<h6>${'Помилка: ' + error.message}</h6>`
         }
     });
-    
+
     // ================================
     
 
