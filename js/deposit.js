@@ -1,6 +1,5 @@
 window.onload = async function () {
-    let herokuLink = 'https://moneyguard-fc72823844dd.herokuapp.com'    
-    // let herokuLink = ''
+    let herokuLink = ''
     let urlGetVariantDepositRequest = herokuLink + '/service/getVariant/deposit';
     let urlPostGetServiceRequest = herokuLink + '/service/getService/deposit';    
     let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency';
@@ -56,7 +55,6 @@ window.onload = async function () {
         });
     } catch (error) {
         console.error('Помилка: ' + error.message);
-        alert('Помилка: ' + error.message);
     }
 
     try {
@@ -81,7 +79,6 @@ window.onload = async function () {
 
     } catch (error) {
         console.error('Помилка: ' + error.message);
-        alert('Помилка: ' + error.message);
     }
 
     document.getElementById('currencyForm').addEventListener('submit', async (event) => {
@@ -108,11 +105,19 @@ window.onload = async function () {
             const result = await response.json();
 
             console.log('Успішна відповідь:', result);
-            alert(result.message);
-            window.location.href = '/main/deposit';
+            const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+            modalBody.textContent = result.message;
+            const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+            myModal.show();
+            document.querySelector('.close').addEventListener('click', function (e) {
+                window.location.href = '/main/deposit' 
+            })
         } catch (error) {
             console.error('Помилка:', error);
-            alert('Помилка: ' + error.message);
+            const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+            modalBody.textContent = 'Network error. Try again.'
+            const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+            myModal.show();
         }
     });
 
@@ -165,7 +170,6 @@ window.onload = async function () {
 
     } catch (error) {
         console.error('Failed to load data:', error);
-        alert('Помилка: ' + error.message);
     }
 
     document.getElementById('payForm').addEventListener('submit', async function(e) {
@@ -190,11 +194,19 @@ window.onload = async function () {
 
             const result = await response.json();
             console.log('Успішна відповідь:', result);
-            alert(result.message);
-            window.location.href = '/main/deposit';
+            const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+            modalBody.textContent = result.message;
+            const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+            myModal.show();
+            document.querySelector('.close').addEventListener('click', function (e) {
+                window.location.href = '/main/deposit' 
+            })
         } catch (error) {
             console.error('Помилка:', error);
-            alert('Помилка: ' + error.message);
+            const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+            modalBody.textContent = 'Network error. Try again.'
+            const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+            myModal.show();
         }
     });
     
@@ -222,11 +234,20 @@ window.onload = async function () {
 
             const result = await response.json();
             console.log('Успішна відповідь:', result);
-            alert(result.message);
-            window.location.href = '/main/deposit';
+            const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+            modalBody.textContent = result.message;
+            const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+            myModal.show();
+            document.querySelector('.close').addEventListener('click', function (e) {
+                window.location.href = '/main/deposit' 
+            })
+
         } catch (error) {
             console.error('Помилка:', error);
-            alert('Помилка: ' + error.message);
+            const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+            modalBody.textContent = 'Network error. Try again.'
+            const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+            myModal.show();
         }
     });
 

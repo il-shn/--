@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>KnightTreasure</title>
-    <link rel="stylesheet" href="/css/login.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KnightTreasure</title>
+  <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
   <div class="main">
     <img src="/images/helmet4.png" alt="" id="helmet_left">
     <div class="login-container">
-      <form action="/login" method="post">
+      <form class="form" action="/login" method="post">
         <h2 class="fw-light text-body-secondary">Log in</h2>
         <div class="input-group">
           <label for="username">User email:</label>
@@ -21,13 +22,35 @@
         </div>
         <button type="submit" class="login-btn">Log in</button>
         <div class="links">
-          <a href="/api/registration" id="signIn">Sign in</a>
+          <a href="/api/registration" id="signIn">Sign up</a>
           <a href="/api/registration/forgotPass">Forgot password?</a>
         </div>
       </form>
     </div>
     <img src="/images/weapon4.png" alt="helmet" id="sword">
+
+<button id="openModalBtn" class="btn btn-primary">
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div id="staticBackdrop" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Modal title</h1>
+        <button id="closeModalBtn" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        ...k.hgkhgilb
+      </div>
+      <div class="modal-footer">
+        <button id="closeModalFooterBtn" class="btn btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
 
+</div>
 </body>
 </html>

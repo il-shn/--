@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Modal</title>
+</head>
+<body>
+    <style>
+        body {
+  font-family: Arial, sans-serif;
+}
+
+.btn {
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-dialog {
+  position: relative;
+  margin: auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 500px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.modal-header, .modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
+}
+
+.modal-body {
+  padding: 10px;
+}
+
+    </style>
+  <!-- Button trigger modal -->
+  <button id="openModalBtn" class="btn btn-primary">
+    Launch static backdrop modal
+  </button>
+
+  <!-- Modal -->
+  <div id="staticBackdrop" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">Modal title</h1>
+          <button id="closeModalBtn" class="btn-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button id="closeModalFooterBtn" class="btn btn-secondary">Close</button>
+          <button class="btn btn-primary">Understood</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const openModalBtn = document.getElementById('openModalBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const closeModalFooterBtn = document.getElementById('closeModalFooterBtn');
+  const modal = document.getElementById('staticBackdrop');
+
+  openModalBtn.addEventListener('click', () => {
+    modal.style.display = 'block';
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  closeModalFooterBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+});
+
+  </script>
+</body>
+</html>

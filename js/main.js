@@ -1,7 +1,6 @@
 
 window.onload = function(){
-    let herokuLink = 'https://moneyguard-fc72823844dd.herokuapp.com'    
-    // let herokuLink = ''
+    let herokuLink = ''
 
     let urlGetMineCurrencyRequest = herokuLink + '/moneyTransfer/getMineCurrency';
     const reqestCurrencyListURL = herokuLink + '/main/api/currency'
@@ -93,11 +92,18 @@ window.onload = function(){
             "currencyName": currencyList.value })
             .then(response => {
                 console.log(response);
-                alert(response.message);
+                const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+                modalBody.textContent = response.message;
+                const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+                myModal.show();
                 getMyCurrencies()
             })
             .catch(error => {
-                alert('Помилка: ' + error.message);
+                console.log('Помилка: ' + error.message);
+                const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+                modalBody.textContent = 'Network error. Try again.'
+                const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+                myModal.show();    
             });    
         });    
 
@@ -188,7 +194,7 @@ window.onload = function(){
                     titulImg()  
                 
                 } else {
-                    alert(JSON.stringify(response.message)); 
+                    console.log(JSON.stringify(response.message)); 
 
                 }
             })
@@ -239,7 +245,7 @@ window.onload = function(){
         }
     })
     .catch(error => {
-        alert('Помилка: ' + error.message);
+        console.log('Помилка: ' + error.message);
     });    
     }
 
@@ -286,7 +292,7 @@ window.onload = function(){
             }
         })
         .catch(error => {
-            alert('Помилка: ' + error.message);
+            console.log('Помилка: ' + error.message);
         });    
             });
         });
@@ -364,7 +370,7 @@ window.onload = function(){
             console.error('Помилка:', error);
             let replanish = document.querySelector('#replenishBox')
             replanish.innerHTML = ""
-            replanish.innerHTML = `<h6>${'Помилка: ' + error.message}</h6>`
+            replanish.innerHTML = `<h6>${error.message}</h6>`
         }
     });
 
@@ -525,15 +531,12 @@ window.onload = function(){
                             const page = parseInt(event.target.getAttribute('data-page'));
                             loadTransactionData(page);
 
-                            // Update active link
                             document.querySelectorAll('.page-link').forEach(link => link.classList.remove('active'));
                             event.target.classList.add('active');
                         }
                     });
 
-                    // Load the first page by default
                     loadTransactionData(0);
-                    // Set the first page link as active
                     pageContainer.querySelector('a[data-page="0"]').classList.add('active');
                 })
                 .catch(error => {

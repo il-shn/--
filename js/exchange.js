@@ -44,7 +44,7 @@ window.onload =function(){
         }
     })
     .catch(error => {
-        alert('Помилка: ' + error.message);
+        console.error('Помилка:', error);
     });
     
 
@@ -73,11 +73,17 @@ window.onload =function(){
     
             .then(response => {
                 console.log('Успішна відповідь:', response);
-                alert(response.message);
-                window.location.href = '/main/currencyExchange';
+                const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+                modalBody.textContent = response.message;
+                const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+                myModal.show();
             })
             .catch(error => {
                 console.error('Помилка:', error);
+                const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+                modalBody.textContent = 'Network error. Try again.'
+                const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+                myModal.show();
             });
     });    
 

@@ -35,7 +35,7 @@ window.onload = function () {
             }
         })
         .catch(error => {
-            alert('Помилка: ' + error.message);
+            console.error('Помилка:', error);
         });
 
     document.getElementById('currencyForm').addEventListener('submit', function (e) {
@@ -61,11 +61,17 @@ window.onload = function () {
             })
             .then(response => {
                 console.log('Успішна відповідь:', response);
-                alert(response.message);
+                const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+                modalBody.textContent = response.message;
+                const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+                myModal.show();
             })
             .catch(error => {
                 console.error('Помилка:', error);
-                alert('Помилка: ' + error.message);
+                const modalBody = document.querySelector('#staticBackdrop .modal-body p');
+                modalBody.textContent = 'Network error. Try again.'
+                const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+                myModal.show();
             });
-    });
-}
+        });
+    }
